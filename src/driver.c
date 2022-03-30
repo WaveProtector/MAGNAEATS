@@ -1,8 +1,27 @@
 #include "driver.h"
 
 int execute_driver(int driver_id, struct communication_buffers* buffers, struct main_data* data) {
-    //TODO
-    return 0; //mas cuidado para mudar isto que esta função deve retornar algo
+    int id_driver = driver_id;
+    int processed_ops;
+
+    while (data->terminate != 1) {
+
+        for(int i = 0; i < (sizeof(buffers->main_rest->ptrs)/sizeof(buffers->main_rest->ptrs[0])); i++) {
+            struct operation new_op = buffers->main_rest->buffer[i];
+
+            if (buffers->main_rest->ptrs[i] == 1 && new_op.id != -1 && data->terminate == 0) {
+                driver_receive_operation(&new_op, buffers, data); //podemos estar a usar mal o &
+
+                driver_process_operation(&new_op, id_driver, data, sizeof(data->results));
+                id_driver--;
+
+                driver_send_answer(&new_op, buffers, data);
+                processed_ops++;
+            }
+        }
+    }
+    
+    return processed_ops; //mas cuidado para mudar isto que esta função deve retornar algo
 }
 
 void driver_receive_operation(struct operation* op, struct communication_buffers* buffers, struct main_data* data) {
@@ -56,5 +75,5 @@ void driver_send_answer(struct operation* op, struct communication_buffers* buff
         }
     }
 
-    return 0;
+    return 0; //pode haver problema aqui porque podemos não ter retirado a op de algum buffer
 }
