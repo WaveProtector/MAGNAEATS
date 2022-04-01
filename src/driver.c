@@ -30,19 +30,7 @@ void driver_receive_operation(struct operation* op, struct communication_buffers
         return 0;
 
     } else {
-        //retiramos o pointer in do buffer circular para saber onde é que se vai escrever no buffer
-        int in = buffers->rest_driv->ptrs->in;
-        int out = buffers->rest_driv->ptrs->out;
-
-        //colocar a operação no buffer
-        buffers->rest_driv->buffer[in] = *op;
-
-        //atualizamos o pointer in pois o espaço em que escrevemos já está ocupado
-        buffers->rest_driv->ptrs->in = in + 1;
-
-        //tratamos do caso em que o out dá a "volta completa" ao buffer circular e chega ao in
-        if (in == out)
-            buffers->rest_driv->ptrs->out = out + 1;
+        write_rest_driver_buffer(buffers->rest_driv, data->buffers_size, op);
     }
 
     return 0;
@@ -73,7 +61,8 @@ void driver_send_answer(struct operation* op, struct communication_buffers* buff
                 buffers->driv_cli->buffer[i] = *op; //o ciclo for.
             }
         }
+        write_driver_client_buffer(buffers->driv_cli, data->buffers_size, op);
     }
 
-    return 0; //pode haver problema aqui porque podemos não ter retirado a op de algum buffer
+    return 0; //pode haver problema aqui porque podemos não ter retirado a op de algum buffer!!!
 }
