@@ -179,12 +179,43 @@ void wait_processes(struct main_data* data) {
 }
 
 void write_statistics(struct main_data* data) {
-	
+
+	int i;
+
+	for(i = 0; i < data->n_restaurants; i++) {
+		printf("Restaurante %d: %d operacoes\n", (i+1), data->restaurant_stats);
+	}
+
+	pintf("\n");
+
+	for(i = 0; i < data->n_drivers; i++) {
+		printf("Restaurante %d: %d operacoes\n", (i+1), data->driver_stats);
+	}
+
+	printf("\n");
+
+	for(i = 0; i < data->n_clients; i++) {
+		printf("Restaurante %d: %d operacoes\n", (i+1), data->client_stats);
+	}
+
 }
 
-/* Função que liberta todos os buffers de memória dinâmica e partilhada previamente
-* reservados na estrutura data.
-*/
 void destroy_memory_buffers(struct main_data* data, struct communication_buffers* buffers) {
+	destroy_dynamic_memory(data->restaurant_pids);
+	destroy_dynamic_memory(data->restaurant_stats);
+	destroy_dynamic_memory(data->client_pids);
+	destroy_dynamic_memory(data->client_stats);
+	destroy_dynamic_memory(data->driver_pids);
+	destroy_dynamic_memory(data->driver_stats);
 	
+	destroy_shared_memory(STR_SHM_MAIN_REST_BUFFER, buffers->main_rest->buffer, data->buffers_size);
+	destroy_shared_memory(STR_SHM_MAIN_REST_PTR, buffers->main_rest->ptrs, data->buffers_size);
+	destroy_shared_memory(STR_SHM_REST_DRIVER_BUFFER, buffers->rest_driv->buffer, data->buffers_size);
+	destroy_shared_memory(STR_SHM_REST_DRIVER_PTR, buffers->rest_driv->ptrs, data->buffers_size);
+	destroy_shared_memory(STR_SHM_DRIVER_CLIENT_BUFFER, buffers->driv_cli->buffer, data->buffers_size);
+	destroy_shared_memory(STR_SHM_DRIVER_CLIENT_PTR, buffers->driv_cli->ptrs, data->buffers_size);
+	destroy_shared_memory(STR_SHM_RESULTS, data->results, data->max_ops);
+	destroy_shared_memory(STR_SHM_TERMINATE, data->terminate, sizeof(int));
+
+
 }
