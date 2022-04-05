@@ -216,6 +216,6 @@ void destroy_memory_buffers(struct main_data* data, struct communication_buffers
 	destroy_shared_memory(STR_SHM_DRIVER_CLIENT_PTR, buffers->driv_cli->ptrs, data->buffers_size);
 	destroy_shared_memory(STR_SHM_RESULTS, data->results, data->max_ops);
 	destroy_shared_memory(STR_SHM_TERMINATE, data->terminate, sizeof(int));
-
+	
 
 }
