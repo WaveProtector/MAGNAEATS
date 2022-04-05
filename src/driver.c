@@ -21,7 +21,7 @@ int execute_driver(int driver_id, struct communication_buffers* buffers, struct 
         }
     }
     
-    return processed_ops; //mas cuidado para mudar isto que esta função deve retornar algo
+    return processed_ops;
 }
 
 void driver_receive_operation(struct operation* op, struct communication_buffers* buffers, struct main_data* data) {
@@ -54,15 +54,9 @@ void driver_send_answer(struct operation* op, struct communication_buffers* buff
         return 0;
 
     } else {
-        int foundEmpty = 0; //funciona como um booleano
-        for (int i = 0; i < (sizeof(buffers->driv_cli->ptrs)/sizeof(buffers->driv_cli->ptrs[0])) && foundEmpty == 0; i++) {
-            if (buffers->driv_cli->ptrs[i] == 0) {  //fazemos um ciclo for até encontrarmos uma posição vazia no buffer.
-                foundEmpty++;                       //Ao encontrar a posição vazia incrementamos o booleano para interromper
-                buffers->driv_cli->buffer[i] = *op; //o ciclo for.
-            }
-        }
+        
         write_driver_client_buffer(buffers->driv_cli, data->buffers_size, op);
     }
 
-    return 0; //pode haver problema aqui porque podemos não ter retirado a op de algum buffer!!!
+    return 0;
 }
