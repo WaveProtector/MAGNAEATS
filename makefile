@@ -8,6 +8,6 @@ process.o = process.h
 restaurant.o = restaurant.h
 CC = gcc
 out: $(OBJECTOS)
-$(CC) $(addprefix $(OBJ_dir)/,$(OBJECTOS)) -o bin/magnaeats
+      $(CC) $(addprefix $(OBJ_DIR)/,$(OBJECTOS)) -o bin/magnaeats
 %.o: src/%.c $($@)
 $(CC) -I include -o $(OBJ_dir)/$@ -c $<
