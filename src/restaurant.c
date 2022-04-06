@@ -2,18 +2,20 @@
 
 int execute_restaurant(int rest_id, struct communication_buffers* buffers, struct main_data* data) {
 
+
     int id_rest = rest_id;
     int processed_ops;
+    int *pro = &processed_ops;
 
     while (*data->terminate != 1) {
 
-        for(int i = 0; i < (sizeof(buffers->rest_driv->ptrs)/sizeof(buffers->rest_driv->ptrs[0])); i++) {
+        for(int i = 0; i < (data->buffers_size/sizeof(int)); i++) {
                 struct operation* new_op = buffers->rest_driv->buffer + i;
 
-                if (buffers->rest_driv->ptrs + i == 1 && (*new_op).id != -1 && data->terminate == 0) {
+                if ((*new_op).id != -1 && data->terminate == 0) {
                     restaurant_receive_operation(new_op, id_rest, buffers, data); 
 
-                    restaurant_process_operation(new_op, id_rest, data, sizeof(data->results)/sizeof(*new_op));
+                    restaurant_process_operation(new_op, id_rest, data, pro);
                     id_rest--;
                     processed_ops++;
                 }
@@ -42,4 +44,5 @@ void restaurant_process_operation(struct operation* op, int rest_id, struct main
 void restaurant_forward_operation(struct operation* op, struct communication_buffers* buffers, struct main_data* data) {
     write_rest_driver_buffer(buffers->rest_driv, data->buffers_size, op);
 }
+
 

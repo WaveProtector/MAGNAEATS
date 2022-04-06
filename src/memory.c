@@ -32,7 +32,7 @@ void* create_shared_memory(char* name, int size) {
 }
 
 void* create_dynamic_memory(int size) {
-    calloc(size, sizeof(int));
+    return calloc(size, sizeof(int));
 }
 
 void destroy_shared_memory(char* name, void* ptr, int size) {

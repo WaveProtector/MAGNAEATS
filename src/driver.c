@@ -2,7 +2,8 @@
 
 int execute_driver(int driver_id, struct communication_buffers* buffers, struct main_data* data) {
     int id_driver = driver_id;
-    int processed_ops;
+    int processed_ops = 0;
+    int *pro = &processed_ops;
 
     while (*data->terminate != 1) {
 
@@ -10,9 +11,9 @@ int execute_driver(int driver_id, struct communication_buffers* buffers, struct 
             struct operation* new_op = buffers->main_rest->buffer + i;
 
             if (buffers->main_rest->ptrs[i] == 1 && (*new_op).id != -1 && data->terminate == 0) {
-                driver_receive_operation(new_op, buffers, data); //podemos estar a usar mal o &
+                driver_receive_operation(new_op, buffers, data); 
 
-                driver_process_operation(new_op, id_driver, data, sizeof(data->results)/sizeof(*new_op));
+                driver_process_operation(new_op, id_driver, data, pro);
                 id_driver--;
 
                 driver_send_answer(new_op, buffers, data);
@@ -21,7 +22,7 @@ int execute_driver(int driver_id, struct communication_buffers* buffers, struct 
         }
     }
     
-    return processed_ops; //mas cuidado para mudar isto que esta função deve retornar algo
+    return processed_ops;
 }
 
 void driver_receive_operation(struct operation* op, struct communication_buffers* buffers, struct main_data* data) {
@@ -41,7 +42,6 @@ void driver_process_operation(struct operation* op, int driver_id, struct main_d
 }
 
 void driver_send_answer(struct operation* op, struct communication_buffers* buffers, struct main_data* data) {
-
+        
         write_driver_client_buffer(buffers->driv_cli, data->buffers_size, op);
-
 }
