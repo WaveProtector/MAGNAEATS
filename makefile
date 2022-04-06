@@ -10,4 +10,4 @@ CC = gcc
 out: $(OBJECTOS)
       $(CC) $(addprefix $(OBJ_DIR)/,$(OBJECTOS)) -o bin/magnaeats
 %.o: src/%.c $($@)
-$(CC) -I include -o $(OBJ_dir)/$@ -c $<
+      $(CC) -I include -o $(OBJ_dir)/$@ -c $<
