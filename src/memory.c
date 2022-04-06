@@ -1,9 +1,11 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <main.h>
-#include <sys/mman.h>
-#include <sys/stat.h>    
-#include <fcntl.h>  
+#include "stdio.h"
+#include "stdlib.h"
+#include "main.h"
+#include "sys/mman.h"
+#include "sys/stat.h" 
+#include "sys/shm.h"   
+#include "fcntl.h"  
+#include "unistd.h"
 
 void* create_shared_memory(char* name, int size) {
     int *ptr;
@@ -11,31 +13,31 @@ void* create_shared_memory(char* name, int size) {
     int fd = shm_open(name, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
 
     if (fd == -1) {
-        perror(*name);
+        perror(name);
         exit(1); 
     }
 
     ret = ftruncate(fd, size * sizeof(int));
     if (ret == -1){
-        perror(*name);
+        perror(name);
         exit(2); 
     }
 
     ptr = mmap(0,size * sizeof(int), PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     if (ptr == MAP_FAILED) { 
-        perror(strcat(*name, " mmap")); 
+        perror(name); 
         exit(3);
     }
     return ptr;
 }
 
 void* create_dynamic_memory(int size) {
-    return calloc(size, sizeof(int));
+    calloc(size, sizeof(int));
 }
 
 void destroy_shared_memory(char* name, void* ptr, int size) {
     munmap(ptr, size);
-    shm_unline(name);
+    shm_unlink(name);
 }
 
 void destroy_dynamic_memory(void* ptr) {
