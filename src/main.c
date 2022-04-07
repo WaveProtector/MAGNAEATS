@@ -1,8 +1,32 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <main.h>
-#include <process.h>
-#include <string.h>
+#include "stdio.h"
+#include "stdlib.h"
+#include "main.h"
+#include "process.h"
+#include "string.h"
+
+int main(int argc, char *argv[]) {
+      //init data structures
+struct main_data* data = create_dynamic_memory(sizeof(struct main_data));
+struct communication_buffers* buffers = create_dynamic_memory(sizeof(struct communication_buffers));
+buffers->main_rest = create_dynamic_memory(sizeof(struct rnd_access_buffer));
+buffers->rest_driv = create_dynamic_memory(sizeof(struct circular_buffer));
+buffers->driv_cli = create_dynamic_memory(sizeof(struct rnd_access_buffer));
+      //execute main code
+main_args(argc, argv, data); 
+create_dynamic_memory_buffers(data); 
+create_shared_memory_buffers(data, buffers); 
+launch_processes(buffers, data); 
+user_interaction(buffers, data);
+destroy_memory_buffers(data, buffers);
+      //release memory before terminating
+destroy_dynamic_memory(data); 
+destroy_dynamic_memory(buffers->main_rest); 
+destroy_dynamic_memory(buffers->rest_driv); 
+destroy_dynamic_memory(buffers->driv_cli); 
+destroy_dynamic_memory(buffers);
+return 0;
+}
+ 
 
 void main_args(int argc, char* argv[], struct main_data* data) {
 	data->max_ops = atoi(argv[1]);
@@ -52,9 +76,9 @@ void launch_processes(struct communication_buffers* buffers, struct main_data* d
 
 void user_interaction(struct communication_buffers* buffers, struct main_data* data) {
 
-    while (*data->terminate != 0) {
+    while (*data->terminate == 0) {
 		
-		char s [] = "";
+		char s [100];
         int counter = 0;
 	    int *c = &counter;
 
@@ -77,9 +101,12 @@ void user_interaction(struct communication_buffers* buffers, struct main_data* d
 		    printf("You have 4 options to choose: \n"
 		           "-request -> Type 'request' and press enter to make an order.\n"
 			       "-status -> Type 'status' and press enter to check the status of an order.\n"
-			       "-stop -> Type 'stop' to finish the program.\n" 
-			       "-help -> Type 'help' to read information about your options.\n \n \n \n");
+			       "-stop -> Type 'stop' and press enter to finish the program.\n" 
+			       "-help -> Type 'help' and press enter to read information about your options.\n \n");
 	    }
+		else {
+			printf("Type 'help' and press enter to read information about your options. \n");
+		}
 
 	}
 
@@ -89,12 +116,13 @@ void create_request(int* op_counter, struct communication_buffers* buffers, stru
 
     if (*op_counter < data->max_ops) {
 
-	    char s [] = "";
-	    char* token;
+	    char s [100];
+		int req_cli;
+		int req_rest;
 
 	    printf("Enter your 'client_number restaurant_number dish': \n");
 	    scanf("%s", s);	
-
+		char* token;
 	    token = strtok(s, " ");
 	    int req_cli = atoi(token);
 	    token = strtok(NULL, " ");
@@ -102,12 +130,13 @@ void create_request(int* op_counter, struct communication_buffers* buffers, stru
 	    token = strtok(NULL, " ");
 	    char* req_dish = token;
 
-		if (req_cli != 0 && req_rest != 0) {
-
-			struct operation newOne = {*op_counter, req_rest, req_cli, req_dish, 'I', 0, 0, 0};
+		if (req_cli != 0 && req_rest != 0 && req_cli <= data->n_clients && req_rest <= data->n_restaurants) { 
+			(*op_counter)++;
+			struct operation newOne = {*op_counter, req_rest, req_cli, s, 'I', 0, 0, 0};
 			struct operation *newPoiter = &newOne;
 			write_main_rest_buffer(buffers->main_rest, data->buffers_size, newPoiter);
-
+			data->results[*op_counter - 1] = newOne;
+			printf("Your order ID: %d \n \n", *op_counter);
 	    }
 
 		else {
@@ -128,7 +157,7 @@ void read_status(struct main_data* data) {
 	printf("Enter your 'order_id': \n");
 	scanf("%s", s);
 
-	int check = 0;
+	int check = 0; //serve como booleano
 	for (int i = 0; i < data->buffers_size; i++) {
 		if (atoi(s) == (*((data->results) + i)).id) {
 			printf("Order ID: %d \n"
@@ -138,20 +167,20 @@ void read_status(struct main_data* data) {
 				   "Dish: %s \n"
 				   "Received restaurant ID: %d \n"
 				   "Received driver ID: %d \n"
-				   "Received client ID: %d \n",
-				   (*((data->results) + i)).id,
-				   (*((data->results) + i)).status,
-				   (*((data->results) + i)).requesting_client,
-				   (*((data->results) + i)).requested_rest,
-				   (*((data->results) + i)).requested_dish,
-				   (*((data->results) + i)).receiving_rest,
-				   (*((data->results) + i)).receiving_driver,
-				   (*((data->results) + i)).receiving_client);
+				   "Received client ID: %d \n \n",
+				   data->results->id,
+				   data->results->status,
+				   data->results->requesting_client,
+				   data->results->requested_rest,
+				   data->results->requested_dish,
+				   data->results->receiving_rest,
+				   data->results->receiving_driver,
+				   data->results->receiving_client);
 			check += 1;
 		}
 	}			
 	if (check == 0) {
-		printf("Error: this order id does not exist.");
+		printf("Error: this order id does not exist. \n");
 	}
 }
 
@@ -159,21 +188,20 @@ void stop_execution(struct main_data* data, struct communication_buffers* buffer
 	*data->terminate = 1;
 	wait_processes(data);
 	write_statistics(data);
-	destroy_memory_buffers(data, buffers);
 }
 
 void wait_processes(struct main_data* data) {
 
 	for (int i = 0; i < data->n_restaurants; i++) {
-		wait_process(*(data->restaurant_pids + 1));
+		wait_process(*(data->restaurant_pids + i));
 	}
 
 	for (int i = 0; i < data->n_clients; i++) {
-		wait_process(*(data->client_pids + 1));
+		wait_process(*(data->client_pids + i));
 	}
 
 	for (int i = 0; i < data->n_drivers; i++) {
-		wait_process(*(data->driver_pids + 1));
+		wait_process(*(data->driver_pids + i));
 	}
 
 }
