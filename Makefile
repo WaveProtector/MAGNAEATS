@@ -4,7 +4,7 @@ OBJECTOS = main.o client.o driver.o memory.o process.o restaurant.o
 magnaeats: $(OBJECTOS)
 	gcc $(addprefix $(OBJ_dir)/,$(OBJECTOS)) -o bin/magnaeats -lrt
 main.o: src/main.c include/main.h
-	gcc -Wall -g -I include -o obj/main.o -c src/main.c
+	gcc  -g -I include -o obj/main.o -c src/main.c
 client.o: src/client.c include/client.h
 	gcc -Wall -g -I include -o obj/client.o -c src/client.c
 driver.o: src/driver.c include/driver.h

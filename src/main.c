@@ -3,6 +3,17 @@
 #include "main.h"
 #include "process.h"
 #include "string.h"
+#include "ctype.h"
+
+int isnumber(char *arg) {
+	int i;
+	for(i = 0; i < strlen(arg); i++) {
+		if (isdigit(arg[i]) == 0) {
+			return 0;
+		}
+	}
+	return 1;
+}
 
 int main(int argc, char *argv[]) {
       //init data structures
@@ -12,28 +23,40 @@ buffers->main_rest = create_dynamic_memory(sizeof(struct rnd_access_buffer));
 buffers->rest_driv = create_dynamic_memory(sizeof(struct circular_buffer));
 buffers->driv_cli = create_dynamic_memory(sizeof(struct rnd_access_buffer));
       //execute main code
-main_args(argc, argv, data); 
-create_dynamic_memory_buffers(data); 
-create_shared_memory_buffers(data, buffers); 
-launch_processes(buffers, data); 
-user_interaction(buffers, data);
-destroy_memory_buffers(data, buffers);
+if(argc != 6) {
+	printf("Uso: magnaeats max_ops buffers_size n_restaurants n_drivers n_clients \nExemplo: ./bin/magnaeats 10 10 1 1 1\n");
+}
+else if(isnumber(argv[1]) == 0 
+		|| isnumber(argv[2]) == 0
+		|| isnumber(argv[3]) == 0
+		|| isnumber(argv[4]) == 0
+		|| isnumber(argv[5]) == 0){
+		printf("Parâmetros incorretos! Exemplo de uso: ./bin/magnaeats 10 10 1 1 1\n");
+}
+else {
+	
+	main_args(argc, argv, data); 
+	create_dynamic_memory_buffers(data); 
+	create_shared_memory_buffers(data, buffers); 
+	launch_processes(buffers, data); 
+	user_interaction(buffers, data);
+	destroy_memory_buffers(data, buffers);
       //release memory before terminating
-destroy_dynamic_memory(data); 
-destroy_dynamic_memory(buffers->main_rest); 
-destroy_dynamic_memory(buffers->rest_driv); 
-destroy_dynamic_memory(buffers->driv_cli); 
-destroy_dynamic_memory(buffers);
+	destroy_dynamic_memory(data); 
+	destroy_dynamic_memory(buffers->main_rest); 
+	destroy_dynamic_memory(buffers->rest_driv); 
+	destroy_dynamic_memory(buffers->driv_cli); 
+	destroy_dynamic_memory(buffers);
+}
 return 0;
 }
- 
 
 void main_args(int argc, char* argv[], struct main_data* data) {
 	data->max_ops = atoi(argv[1]);
 	data->buffers_size = atoi(argv[2]);
 	data->n_restaurants = atoi(argv[3]);
 	data->n_drivers = atoi(argv[4]);
-	data->n_clients = atoi(argv[5]);
+    data->n_clients = atoi(argv[5]);
 }
 
 void create_dynamic_memory_buffers(struct main_data* data) {
@@ -82,7 +105,7 @@ void user_interaction(struct communication_buffers* buffers, struct main_data* d
         int counter = 0;
 	    int *c = &counter;
 
-	    printf("Options: \n-request \n-status \n-stop \n-help \nChoose your option: \n");
+	    printf("Options: \n \n-request client restaurant dish \n-status id \n-stop \n-help \n \nChoose your option: \n");
 	    scanf("%s", s);
 
 	    if (strcmp(s, "request") == 0) {
@@ -99,8 +122,8 @@ void user_interaction(struct communication_buffers* buffers, struct main_data* d
 
 	    else if (strcmp(s, "help") == 0) {
 		    printf("You have 4 options to choose: \n"
-		           "-request -> Type 'request' and press enter to make an order.\n"
-			       "-status -> Type 'status' and press enter to check the status of an order.\n"
+		           "-request client restaurant dish -> Type 'request' and press enter to make an order.\n"
+			       "-status id -> Type 'status' and press enter to check the status of an order.\n"
 			       "-stop -> Type 'stop' and press enter to finish the program.\n" 
 			       "-help -> Type 'help' and press enter to read information about your options.\n \n");
 	    }
@@ -121,14 +144,7 @@ void create_request(int* op_counter, struct communication_buffers* buffers, stru
 		int req_rest;
 
 	    printf("Enter your 'client_number restaurant_number dish': \n");
-	    scanf("%s", s);	
-		char* token;
-	    token = strtok(s, " ");
-	    int req_cli = atoi(token);
-	    token = strtok(NULL, " ");
-	    int req_rest = atoi(token);
-	    token = strtok(NULL, " ");
-	    char* req_dish = token;
+	    scanf("%d %d %s", &req_cli, &req_rest, s);	
 
 		if (req_cli != 0 && req_rest != 0 && req_cli <= data->n_clients && req_rest <= data->n_restaurants) { 
 			(*op_counter)++;
@@ -152,14 +168,15 @@ void create_request(int* op_counter, struct communication_buffers* buffers, stru
 
 void read_status(struct main_data* data) {
 
-    char s [] = "";
+    int c;
 
 	printf("Enter your 'order_id': \n");
-	scanf("%s", s);
+	scanf("%d", &c);
 
 	int check = 0; //serve como booleano
 	for (int i = 0; i < data->buffers_size; i++) {
-		if (atoi(s) == (*((data->results) + i)).id) {
+		struct operation new = *((data->results) + i);
+		if (c == (*((data->results) + i)).id) {
 			printf("Order ID: %d \n"
 				   "Order status: %c \n"
 			       "Requesting client ID: %d \n"
@@ -168,14 +185,14 @@ void read_status(struct main_data* data) {
 				   "Received restaurant ID: %d \n"
 				   "Received driver ID: %d \n"
 				   "Received client ID: %d \n \n",
-				   data->results->id,
-				   data->results->status,
-				   data->results->requesting_client,
-				   data->results->requested_rest,
-				   data->results->requested_dish,
-				   data->results->receiving_rest,
-				   data->results->receiving_driver,
-				   data->results->receiving_client);
+				   new.id,
+				   new.status,
+				   new.requesting_client,
+				   new.requested_rest,
+				   new.requested_dish,
+				   new.receiving_rest,
+				   new.receiving_driver,
+				   new.receiving_client);
 			check += 1;
 		}
 	}			
@@ -211,19 +228,19 @@ void write_statistics(struct main_data* data) {
 	int i;
 
 	for(i = 0; i < data->n_restaurants; i++) {
-		printf("Restaurante %d: %d operacoes\n", (i+1), data->restaurant_stats[i]);
+		printf("Restaurante %d: %d operacoes\n", (i+1), *(data->restaurant_stats + i));
 	}
 
 	printf("\n");
 
 	for(i = 0; i < data->n_drivers; i++) {
-		printf("Restaurante %d: %d operacoes\n", (i+1), data->driver_stats[i]);
+		printf("Motorista %d: %d operacoes\n", (i+1), *(data->driver_stats + i));
 	}
 
 	printf("\n");
 
 	for(i = 0; i < data->n_clients; i++) {
-		printf("Restaurante %d: %d operacoes\n", (i+1), data->client_stats[i]);
+		printf("Cliente %d: %d operacoes\n", (i+1), *(data->client_stats + i));
 	}
 
 }
