@@ -47,8 +47,8 @@ void destroy_dynamic_memory(void* ptr) {
 void write_main_rest_buffer(struct rnd_access_buffer* buffer, int buffer_size, struct operation* op) {
     for (int i = 0; i < buffer_size; i++) {
         if (*(buffer->ptrs + i) == 0) {
-            *(buffer->ptrs + i) = 1;
-            *(buffer->buffer + i) = *op;
+            buffer->buffer[i] = *op;
+            buffer->ptrs[i]= 1;
             break;
         }
     }
