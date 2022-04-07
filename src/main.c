@@ -5,11 +5,11 @@
 #include <string.h>
 
 void main_args(int argc, char* argv[], struct main_data* data) {
-    strcpy(data->max_ops, argv[1]);
-    strcpy(data->buffers_size, argv[2]);
-    strcpy(data->n_restaurants, argv[3]);
-    strcpy(data->n_drivers, argv[4]);
-    strcpy(data->n_clients, argv[5]);
+	data->max_ops = atoi(argv[1]);
+	data->buffers_size = atoi(argv[2]);
+	data->n_restaurants = atoi(argv[3]);
+	data->n_drivers = atoi(argv[4]);
+	data->n_clients = atoi(argv[5]);
 }
 
 void create_dynamic_memory_buffers(struct main_data* data) {
@@ -29,7 +29,7 @@ void create_shared_memory_buffers(struct main_data* data, struct communication_b
 	buffers->rest_driv->ptrs = create_shared_memory(STR_SHM_REST_DRIVER_PTR, data->buffers_size);
 	buffers->driv_cli->buffer = create_shared_memory(STR_SHM_DRIVER_CLIENT_BUFFER, data->buffers_size);
 	buffers->driv_cli->ptrs = create_shared_memory(STR_SHM_DRIVER_CLIENT_PTR, data->buffers_size);
-	data->results = create_shared_memorySTR_SHM_RESULTS(STR_SHM_RESULTS, data->max_ops);
+	data->results = create_shared_memory(STR_SHM_RESULTS, data->max_ops);
 	data->terminate = create_shared_memory(STR_SHM_TERMINATE, sizeof(int));
 
 }
@@ -59,7 +59,7 @@ void user_interaction(struct communication_buffers* buffers, struct main_data* d
 	    int *c = &counter;
 
 	    printf("Options: \n-request \n-status \n-stop \n-help \nChoose your option: \n");
-	    scanf('%s', &s);
+	    scanf("%s", s);
 
 	    if (strcmp(s, "request") == 0) {
 			create_request(c, buffers, data);
@@ -93,7 +93,7 @@ void create_request(int* op_counter, struct communication_buffers* buffers, stru
 	    char* token;
 
 	    printf("Enter your 'client_number restaurant_number dish': \n");
-	    scanf('%s', &s);	
+	    scanf("%s", s);	
 
 	    token = strtok(s, " ");
 	    int req_cli = atoi(token);
@@ -123,14 +123,14 @@ void create_request(int* op_counter, struct communication_buffers* buffers, stru
 
 void read_status(struct main_data* data) {
 
-    char s = "";
+    char s [] = "";
 
 	printf("Enter your 'order_id': \n");
-	scanf('%s', &s);
+	scanf("%s", s);
 
 	int check = 0;
 	for (int i = 0; i < data->buffers_size; i++) {
-		if (strcmp(s, (*((data->results) + i)).id) == 0) {
+		if (atoi(s) == (*((data->results) + i)).id) {
 			printf("Order ID: %d \n"
 				   "Order status: %c \n"
 			       "Requesting client ID: %d \n"
@@ -183,19 +183,19 @@ void write_statistics(struct main_data* data) {
 	int i;
 
 	for(i = 0; i < data->n_restaurants; i++) {
-		printf("Restaurante %d: %d operacoes\n", (i+1), data->restaurant_stats);
+		printf("Restaurante %d: %d operacoes\n", (i+1), data->restaurant_stats[i]);
 	}
 
-	pintf("\n");
+	printf("\n");
 
 	for(i = 0; i < data->n_drivers; i++) {
-		printf("Restaurante %d: %d operacoes\n", (i+1), data->driver_stats);
+		printf("Restaurante %d: %d operacoes\n", (i+1), data->driver_stats[i]);
 	}
 
 	printf("\n");
 
 	for(i = 0; i < data->n_clients; i++) {
-		printf("Restaurante %d: %d operacoes\n", (i+1), data->client_stats);
+		printf("Restaurante %d: %d operacoes\n", (i+1), data->client_stats[i]);
 	}
 
 }
