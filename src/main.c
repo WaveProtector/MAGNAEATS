@@ -97,7 +97,7 @@ void launch_processes(struct communication_buffers* buffers, struct main_data* d
 
 }
 
-void user_interaction(struct communication_buffers* buffers, struct main_data* data) {
+void user_interaction(struct communication_buffers* buffers, struct main_data* data) { //ATENÇÃO: se isto acabar por não funcionar, vão ao github ver os commits antigos e meter o main que estiver melhor
 
     while (*data->terminate == 0) {
 		
@@ -105,22 +105,33 @@ void user_interaction(struct communication_buffers* buffers, struct main_data* d
         int counter = 0;
 	    int *c = &counter;
 
-	    printf("Options: \n \n-request client restaurant dish \n-status id \n-stop \n-help \n \nChoose your option: \n");
-	    scanf("%s", s);
+		char dish [100];
+		int snd_arg; 
+		int req_rest;
 
-	    if (strcmp(s, "request") == 0) {
+	    printf("Options: \n \n-request client restaurant dish \n-status id \n-stop \n-help \n \nChoose your option: \n");
+	    scanf("%s %d %d %s", s, snd_arg, req_rest, dish);
+
+	    if (strcmp(s, "request") == 0 && snd_arg >= 0 && req_rest >= 0 && strlen(dish) >= 0) {
+			if (counter >= data->max_ops ) {
+				printf("Já foram criadas o máximo de operações! \n");
+			} else {
+			struct operation new_op = {counter, req_rest, snd_arg, s, 'I', 0, 0, 0};
+			counter++;
+			data->results[counter] = new_op; //no create request vamos buscar a operação criada aos results
 			create_request(c, buffers, data);
+			}
 		}
 
-	    else if (strcmp(s, "status") == 0) {
+	    else if (strcmp(s, "status") == 0 && snd_arg == NULL && req_rest == NULL && strlen(dish) == 0) { 
 			read_status(data);
 	    }
 
-	    else if (strcmp(s, "stop") == 0) {
+	    else if (strcmp(s, "stop") == 0 && strlen(snd_arg) >= counter && strlen(req_rest) == 0 && strlen(dish) == 0) {
 		    stop_execution(data, buffers);
 	    }
 
-	    else if (strcmp(s, "help") == 0) {
+	    else if (strcmp(s, "help") == 0 && strlen(snd_arg) == 0 && strlen(req_rest) == 0 && strlen(dish) == 0) {
 		    printf("You have 4 options to choose: \n"
 		           "-request client restaurant dish -> Type 'request' and press enter to make an order.\n"
 			       "-status id -> Type 'status' and press enter to check the status of an order.\n"
@@ -138,22 +149,19 @@ void user_interaction(struct communication_buffers* buffers, struct main_data* d
 void create_request(int* op_counter, struct communication_buffers* buffers, struct main_data* data) {
 
     if (*op_counter < data->max_ops) {
-
-	    char s [100];
-		int req_cli;
-		int req_rest;
-
-	    printf("Enter your 'client_number restaurant_number dish': \n");
-	    scanf("%d %d %s", &req_cli, &req_rest, s);	
+		int counter = op_counter;
+		struct operation newOp = data->results[counter];
+	    char* s = newOp.requested_dish;
+		int req_cli = newOp.requesting_client;
+		int req_rest = newOp.requested_rest;
 
 		if (req_cli != 0 && req_rest != 0 && req_cli <= data->n_clients && req_rest <= data->n_restaurants) { 
 			(*op_counter)++;
-			struct operation newOne = {*op_counter, req_rest, req_cli, s, 'I', 0, 0, 0};
-			struct operation *newPoiter = &newOne;
+			struct operation *newPoiter = &newOp;
 			write_main_rest_buffer(buffers->main_rest, data->buffers_size, newPoiter);
-			data->results[*op_counter - 1] = newOne;
+			data->results[*op_counter - 1] = newOp;
 			printf("Your order ID: %d \n \n", *op_counter);
-	    }
+	    } //talvez funcione, pois apenas substitui o newOp que foi criado nos results
 
 		else {
 			printf("This restaurant or client number does not exist. You need to try it again. \n");
