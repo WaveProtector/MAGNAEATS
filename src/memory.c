@@ -52,7 +52,7 @@ void destroy_dynamic_memory(void* ptr) {
 void write_main_rest_buffer(struct rnd_access_buffer* buffer, int buffer_size, struct operation* op) {
     int i;
     for (i = 0; i < buffer_size; i++) {
-        if (*(buffer->ptrs + i) == 0) {
+        if (buffer->ptrs[i] == 0) {
             buffer->buffer[i] = *op;
             buffer->ptrs[i]= 1;
             break;
@@ -61,18 +61,16 @@ void write_main_rest_buffer(struct rnd_access_buffer* buffer, int buffer_size, s
 }
 
 void write_rest_driver_buffer(struct circular_buffer* buffer, int buffer_size, struct operation* op) {
-    while (buffer->ptrs->in % buffer_size == buffer->ptrs->out) {
-        *(buffer->buffer + buffer->ptrs->in) = *op;
-        buffer->ptrs->in = (buffer->ptrs->in + 1) % buffer_size;
-    }
+    buffer->buffer[buffer->ptrs->in] = *op;
+    buffer->ptrs->in = (buffer->ptrs->in + 1) % buffer_size;
 }
 
 void write_driver_client_buffer(struct rnd_access_buffer* buffer, int buffer_size, struct operation* op) {
     int i;
     for (i = 0; i < buffer_size; i++) {
-        if (*(buffer->ptrs + i) == 0) {
-            *(buffer->ptrs + i) = 1;
-            *(buffer->buffer + i) = *op;
+        if (buffer->ptrs[i] == 0) {
+            buffer->ptrs[i] = 1;
+            buffer->buffer[i] = *op;
             break;
         }
     }
@@ -81,27 +79,25 @@ void write_driver_client_buffer(struct rnd_access_buffer* buffer, int buffer_siz
 void read_main_rest_buffer(struct rnd_access_buffer* buffer, int rest_id, int buffer_size, struct operation* op) {
     int i;
     for(i = 0; i < buffer_size; i++) {
-        if (*((buffer->ptrs) + i) == 1) {
-            *op = *(buffer->buffer + i);
-            *(buffer->ptrs + i) = 0;
+        if (buffer->ptrs[i] == 1) {
+            *op = buffer->buffer[i];
+            buffer->ptrs[i] = 0;
             break;
         }
     }
 }
 
 void read_rest_driver_buffer(struct circular_buffer* buffer, int buffer_size, struct operation* op) {
-      while (buffer->ptrs->in == buffer->ptrs->out) {
-        op = buffer->buffer + buffer->ptrs->out;
-        buffer->ptrs->out = (buffer->ptrs->out + 1) % buffer_size;
-    }
+    *op = buffer->buffer[buffer->ptrs->out];
+    buffer->ptrs->out = (buffer->ptrs->out + 1) % buffer_size;
 }
 
 void read_driver_client_buffer(struct rnd_access_buffer* buffer, int client_id, int buffer_size, struct operation* op) {
     int i;
     for(i = 0; i < buffer_size; i++) {
-        if (*(buffer->ptrs + i) == 1) {
+        if (buffer->ptrs[i] == 1) {
             *op = *(buffer->buffer + i);
-            *(buffer->ptrs + i) = 0;
+            buffer->ptrs[i] = 0;
             break;
         }
     }
