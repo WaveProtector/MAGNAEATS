@@ -56,8 +56,6 @@ void write_main_rest_buffer(struct rnd_access_buffer* buffer, int buffer_size, s
 }
 
 void write_rest_driver_buffer(struct circular_buffer* buffer, int buffer_size, struct operation* op) {
-    buffer->ptrs->in = 0;
-    buffer->ptrs->out = 0;
     while (buffer->ptrs->in % buffer_size == buffer->ptrs->out) {
         *(buffer->buffer + buffer->ptrs->in) = *op;
         buffer->ptrs->in = (buffer->ptrs->in + 1) % buffer_size;
@@ -87,8 +85,10 @@ void read_main_rest_buffer(struct rnd_access_buffer* buffer, int rest_id, int bu
 }
 
 void read_rest_driver_buffer(struct circular_buffer* buffer, int buffer_size, struct operation* op) {
-        *op = *(buffer->buffer + buffer->ptrs->out);
+      while (buffer->ptrs->in == buffer->ptrs->out) {
+        op = buffer->buffer + buffer->ptrs->out;
         buffer->ptrs->out = (buffer->ptrs->out + 1) % buffer_size;
+    }
 }
 
 void read_driver_client_buffer(struct rnd_access_buffer* buffer, int client_id, int buffer_size, struct operation* op) {
