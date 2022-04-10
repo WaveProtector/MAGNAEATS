@@ -1,25 +1,24 @@
 #include "driver.h"
+#include <stdio.h>
 
 int execute_driver(int driver_id, struct communication_buffers* buffers, struct main_data* data) {
-    int id_driver = driver_id;
-    int processed_ops = 0;
+    int processed_ops = 0, i;
     int *pro = &processed_ops;
 
     while (*data->terminate != 1) {
-
-        for(int i = 0; i < (data->buffers_size/sizeof(int)); i++) {
-            struct operation* new_op = buffers->main_rest->buffer + i;
-
-            if (buffers->main_rest->ptrs[i] == 1 && (*new_op).id != -1 && data->terminate == 0) {
-                driver_receive_operation(new_op, buffers, data); 
-
-                driver_process_operation(new_op, id_driver, data, pro);
-                id_driver--;
-
-                driver_send_answer(new_op, buffers, data);
+            if(i == data->buffers_size)
+                i = 0;
+                
+            struct operation aux_op = {0, 0 ,0, "", 'I', 0, 0, 0}; 
+            struct operation* op = &aux_op;
+            driver_receive_operation(op, buffers, data); 
+            if (op->id > 0 && *data->terminate == 0) {
+                driver_process_operation(op, driver_id, data, pro);
                 processed_ops++;
+                driver_send_answer(op, buffers, data);
             }
-        }
+
+            i++;
     }
     
     return processed_ops;
@@ -27,7 +26,8 @@ int execute_driver(int driver_id, struct communication_buffers* buffers, struct 
 
 void driver_receive_operation(struct operation* op, struct communication_buffers* buffers, struct main_data* data) {
 
-    write_rest_driver_buffer(buffers->rest_driv, data->buffers_size, op);
+    if(*data->terminate != -1)
+        read_rest_driver_buffer(buffers->rest_driv, data->buffers_size, op);
 
 }
 
@@ -35,10 +35,15 @@ void driver_process_operation(struct operation* op, int driver_id, struct main_d
 
     op->receiving_driver = driver_id;
     op->status = 'D';
-    int nextOp = *counter++; //incrementar o counter pois vamos adicionar mais uma operação ao conjunto de operações realizadas
-    data->results[nextOp] = *op;
-    data->driver_pids++;
+    int i;
+    (*counter)++;
     data->driver_stats++;
+    for(i = 0; i < data->buffers_size; i++) {
+        if((data->results[i]).id == op->id) {
+            data->results[i] = *op;
+            break;
+        }
+    }
 }
 
 void driver_send_answer(struct operation* op, struct communication_buffers* buffers, struct main_data* data) {
