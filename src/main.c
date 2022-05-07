@@ -9,6 +9,8 @@
 #include "process.h"
 #include "string.h"
 #include "ctype.h"
+#include "metime.h"
+#include "unistd.h"
 
 int isnumber(char *arg) {
 	int i;
@@ -21,39 +23,40 @@ int isnumber(char *arg) {
 }
 
 int main(int argc, char *argv[]) {
-      //init data structures
-struct main_data* data = create_dynamic_memory(sizeof(struct main_data));
-struct communication_buffers* buffers = create_dynamic_memory(sizeof(struct communication_buffers));
-buffers->main_rest = create_dynamic_memory(sizeof(struct rnd_access_buffer));
-buffers->rest_driv = create_dynamic_memory(sizeof(struct circular_buffer));
-buffers->driv_cli = create_dynamic_memory(sizeof(struct rnd_access_buffer));
-      //execute main code
-if(argc != 6) {
-	printf("Uso: magnaeats max_ops buffers_size n_restaurants n_drivers n_clients \nExemplo: ./bin/magnaeats 10 10 1 1 1\n");
-}
-else if(isnumber(argv[1]) == 0 
-		|| isnumber(argv[2]) == 0
-		|| isnumber(argv[3]) == 0
-		|| isnumber(argv[4]) == 0
-		|| isnumber(argv[5]) == 0){
-		printf("Parâmetros incorretos! Exemplo de uso: ./bin/magnaeats 10 10 1 1 1\n");
-}
-else {
-	
-	main_args(argc, argv, data); 
-	create_dynamic_memory_buffers(data); 
-	create_shared_memory_buffers(data, buffers);  
-	launch_processes(buffers, data);
-	user_interaction(buffers, data);
-	destroy_memory_buffers(data, buffers);
-      //release memory before terminating
-	destroy_dynamic_memory(data); 
-	destroy_dynamic_memory(buffers->main_rest); 
-	destroy_dynamic_memory(buffers->rest_driv); 
-	destroy_dynamic_memory(buffers->driv_cli); 
+//init data structures
+	struct main_data* data = create_dynamic_memory(sizeof(struct
+	main_data));
+	struct communication_buffers* buffers =
+	create_dynamic_memory(sizeof(struct communication_buffers));
+	buffers->main_rest = create_dynamic_memory(sizeof(struct
+	rnd_access_buffer));
+	buffers->rest_driv = create_dynamic_memory(sizeof(struct
+	circular_buffer));
+	buffers->driv_cli = create_dynamic_memory(sizeof(struct
+	rnd_access_buffer));
+// init semaphore data structure
+	struct semaphores* sems = create_dynamic_memory(sizeof(struct
+	semaphores));
+	sems->main_rest = create_dynamic_memory(sizeof(struct prodcons));
+	sems->rest_driv = create_dynamic_memory(sizeof(struct prodcons));
+	sems->driv_cli = create_dynamic_memory(sizeof(struct prodcons));
+//execute main code
+	main_args(argc, argv, data);
+	create_dynamic_memory_buffers(data);
+	create_shared_memory_buffers(data, buffers);
+	create_semaphores(data, sems);
+	launch_processes(buffers, data, sems);
+	user_interaction(buffers, data, sems);
+//release memory before terminating
+	destroy_dynamic_memory(data);
+	destroy_dynamic_memory(buffers->main_rest);
+	destroy_dynamic_memory(buffers->rest_driv);
+	destroy_dynamic_memory(buffers->driv_cli);
 	destroy_dynamic_memory(buffers);
-}
-return 0;
+	destroy_dynamic_memory(sems->main_rest);
+	destroy_dynamic_memory(sems->rest_driv);
+	destroy_dynamic_memory(sems->driv_cli);
+	destroy_dynamic_memory(sems);
 }
 
 void main_args(int argc, char* argv[], struct main_data* data) {
@@ -155,6 +158,7 @@ void create_request(int* op_counter, struct communication_buffers* buffers, stru
 		if (req_cli != 0 && req_rest != 0 && req_cli <= data->n_clients && req_rest <= data->n_restaurants) { 
 			(*op_counter)++;
 			struct operation newOne = {*op_counter, req_rest, req_cli, dish, 'I', 0, 0, 0};
+			clock_gettime(CLOCK_REALTIME, &newOne.start_time); //regista a instância de tempo em que a operação foi criada
 			struct operation *newPoiter = &newOne;
 			write_main_rest_buffer(buffers->main_rest, data->buffers_size, newPoiter);
 			data->results[*op_counter - 1] = newOne;

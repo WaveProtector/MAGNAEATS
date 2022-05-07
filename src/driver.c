@@ -4,7 +4,8 @@
 // Ricardo Mateus, fc56366
 
 #include "driver.h"
-#include <stdio.h>
+#include "stdio.h"
+#include "metime.h"
 
 int execute_driver(int driver_id, struct communication_buffers* buffers, struct main_data* data) {
     int processed_ops = 0, i;
@@ -13,16 +14,18 @@ int execute_driver(int driver_id, struct communication_buffers* buffers, struct 
     struct operation* op = &aux_op;
 
     while (*data->terminate != 1) {
-            if(i == data->buffers_size)
-                i = 0;
+        if(i == data->buffers_size)
+            i = 0;
                 
-            driver_receive_operation(op, buffers, data); 
-            if (op->id > 0 && *data->terminate == 0) {
-                driver_process_operation(op, driver_id, data, pro);
-                processed_ops++;
-                driver_send_answer(op, buffers, data);
-            }
-            i++;
+        driver_receive_operation(op, buffers, data); 
+        clock_gettime(CLOCK_REALTIME, &op->driver_time); //regista a instância de tempo em que a operação foi recebida pelo driver
+
+        if (op->id > 0 && *data->terminate == 0) {
+            driver_process_operation(op, driver_id, data, pro);
+            processed_ops++;
+            driver_send_answer(op, buffers, data);
+        }
+        i++;
     }
     
     return processed_ops;

@@ -4,7 +4,8 @@
 // Ricardo Mateus, fc56366
 
 #include "client.h"
-#include <stdio.h>
+#include "stdio.h"
+#include "metime.h"
 
 int execute_client(int client_id, struct communication_buffers* buffers, struct main_data* data) {
     int processed_ops, i;
@@ -17,6 +18,7 @@ int execute_client(int client_id, struct communication_buffers* buffers, struct 
                 i = 0;
 
             client_get_operation(op, client_id, buffers, data);
+            clock_gettime(CLOCK_REALTIME, &op->client_end_time); //regista a instância de tempo em que a operação foi recebida pelo cliente
     
 
             if (op->id > 0 && *data->terminate == 0) {
