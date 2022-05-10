@@ -18,7 +18,7 @@ int execute_driver(int driver_id, struct communication_buffers* buffers, struct 
             i = 0;
                 
         driver_receive_operation(op, buffers, data, sems); 
-        clock_gettime(CLOCK_REALTIME, &op->driver_time); //regista a instância de tempo em que a operação foi recebida pelo driver
+        register_driver_time(*op); //regista a instância de tempo em que a operação foi recebida pelo driver
 
         if (op->id > 0 && *data->terminate == 0) {
             driver_process_operation(op, driver_id, data, pro, sems);
@@ -27,6 +27,7 @@ int execute_driver(int driver_id, struct communication_buffers* buffers, struct 
         }
         i++;
     }
+    
     return processed_ops;
 }
 
