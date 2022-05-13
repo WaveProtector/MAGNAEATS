@@ -27,14 +27,6 @@ struct main_data {
 };
 
 
-/* Função que lê os argumentos da aplicação, nomeadamente o número
-* máximo de operações, o tamanho dos buffers de memória partilhada
-* usados para comunicação, e o número de clientes, de motoristas e de
-* restaurantes. Guarda esta informação nos campos apropriados da
-* estrutura main_data.
-*/
-void main_args(int argc, char* argv[], struct main_data* data);
-
 /* Função que reserva a memória dinâmica necessária para a execução
 * do MAGNAEATS, nomeadamente para os arrays *_pids e *_stats da estrutura 
 * main_data. Para tal, pode ser usada a função create_dynamic_memory.

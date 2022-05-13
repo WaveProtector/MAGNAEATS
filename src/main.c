@@ -7,6 +7,7 @@
 #include "stdlib.h"
 #include "main.h"
 #include "process.h"
+#include "configuration.h"
 #include "string.h"
 #include "ctype.h"
 #include "metime.h"
@@ -41,7 +42,7 @@ int main(int argc, char *argv[]) {
 	sems->rest_driv = create_dynamic_memory(sizeof(struct prodcons));
 	sems->driv_cli = create_dynamic_memory(sizeof(struct prodcons));
 //execute main code
-	main_args(argc, argv, data);
+	config_get_params(data);
 	create_dynamic_memory_buffers(data);
 	create_shared_memory_buffers(data, buffers);
 	create_semaphores(data, sems);
@@ -57,14 +58,6 @@ int main(int argc, char *argv[]) {
 	destroy_dynamic_memory(sems->rest_driv);
 	destroy_dynamic_memory(sems->driv_cli);
 	destroy_dynamic_memory(sems);
-}
-
-void main_args(int argc, char* argv[], struct main_data* data) {
-	data->max_ops = atoi(argv[1]);
-	data->buffers_size = atoi(argv[2]);
-	data->n_restaurants = atoi(argv[3]);
-	data->n_drivers = atoi(argv[4]);
-    data->n_clients = atoi(argv[5]);
 }
 
 void create_dynamic_memory_buffers(struct main_data* data) {
@@ -89,23 +82,23 @@ void create_shared_memory_buffers(struct main_data* data, struct communication_b
 
 }
 
-void launch_processes(struct communication_buffers* buffers, struct main_data* data) {
+void launch_processes(struct communication_buffers* buffers, struct main_data* data, struct semaphores* sems) {
 
 	for (int i = 0; i < data->n_restaurants; i++) {
-		*(data->restaurant_pids + i) = launch_restaurant (i + 1, buffers, data);
+		*(data->restaurant_pids + i) = launch_restaurant (i + 1, buffers, data, sems);
 	}
 
 	for (int i = 0; i < data->n_clients; i++) {
-		*(data->client_pids + i) = launch_client (i + 1, buffers, data);
+		*(data->client_pids + i) = launch_client (i + 1, buffers, data, sems);
 	}
 
 	for (int i = 0; i < data->n_drivers; i ++) {
-		*(data->driver_pids + i) = launch_driver (i + 1, buffers, data);
+		*(data->driver_pids + i) = launch_driver (i + 1, buffers, data, sems);
 	}
 
 }
 
-void user_interaction(struct communication_buffers* buffers, struct main_data* data) {
+void user_interaction(struct communication_buffers* buffers, struct main_data* data, struct semaphores* sems) {
 
 	int counter = 0;
 
