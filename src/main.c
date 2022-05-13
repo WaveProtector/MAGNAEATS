@@ -151,7 +151,7 @@ void create_request(int* op_counter, struct communication_buffers* buffers, stru
 		if (req_cli != 0 && req_rest != 0 && req_cli <= data->n_clients && req_rest <= data->n_restaurants) { 
 			(*op_counter)++;
 			struct operation newOne = {*op_counter, req_rest, req_cli, dish, 'I', 0, 0, 0};
-			clock_gettime(CLOCK_REALTIME, &newOne.start_time); //regista a instância de tempo em que a operação foi criada
+			register_start_time(newOne); //regista a instância de tempo em que a operação foi criada
 			struct operation *newPoiter = &newOne;
 			write_main_rest_buffer(buffers->main_rest, data->buffers_size, newPoiter);
 			data->results[*op_counter - 1] = newOne;
