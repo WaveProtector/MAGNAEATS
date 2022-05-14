@@ -4,7 +4,6 @@
 #include "main.h"
 
 struct config {
-
     char* log_name;
     char* stat_name;
 
