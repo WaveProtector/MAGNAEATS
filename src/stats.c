@@ -33,9 +33,9 @@ void execute_stats(struct main_data* data) {
 }
 
 char* restaurants_prep_req(int* restaurant_stats, int *restaurant_pids) {
-    char* output[(sizeof(restaurant_stats)/sizeof(restaurant_stats[0])) * 2]; //Este é um array de strings, assim fica mais fácil fazer cada linha no ciclo for
-    char* rest_id;
-    char* num_stats;
+    static char* output[(sizeof(restaurant_stats)/sizeof(restaurant_stats[0])) * 2]; //Este é um array de strings, assim fica mais fácil fazer cada linha no ciclo for
+    char rest_id[10];
+    char num_stats[10];
     for(int i = 0; i < sizeof(restaurant_stats)/sizeof(restaurant_stats[0]); i++) {
         sprintf(rest_id, " %d ", restaurant_pids[i]);       //passamos de int para string
         sprintf(num_stats, " %d ", restaurant_stats[i]);
@@ -50,8 +50,8 @@ char* restaurants_prep_req(int* restaurant_stats, int *restaurant_pids) {
 
 char* drivers_prep_req(int* driver_stats, int *driver_pids) {
     char* output[(sizeof(driver_stats)/sizeof(driver_stats[0])) * 2];
-    char* driver_id;
-    char* num_stats;
+    char driver_id[10];
+    char num_stats[10];
     for(int i = 0; i < sizeof(driver_stats)/sizeof(driver_stats[0]); i++) {
         sprintf(driver_id, " %d ", driver_pids[i]);
         sprintf(num_stats, " %d ", driver_stats[i]);
@@ -65,8 +65,8 @@ char* drivers_prep_req(int* driver_stats, int *driver_pids) {
 
 char* clients_prep_req(int* client_stats, int *client_pids) {
     char* output[(sizeof(client_stats)/sizeof(client_stats[0])) * 2];
-    char* client_id;
-    char* num_stats;
+    char client_id[10];
+    char num_stats[10];
     for(int i = 0; i < sizeof(client_stats)/sizeof(client_stats[0]); i++) {
         sprintf(client_id, " %d ", client_pids[i]);
         sprintf(num_stats, " %d ", client_stats[i]);
@@ -80,10 +80,10 @@ char* clients_prep_req(int* client_stats, int *client_pids) {
 
 char* req_stats(struct operation* results) {
     char* output[(sizeof(results)/sizeof(results[0])) * 2];
-    char* result_num;
-    char* rest_id;
-    char* driver_id;
-    char* client_id;
+    char result_num[10];
+    char rest_id[10];
+    char driver_id[10];
+    char client_id[10];
     struct timespec total_time;
 
     for(int i = 0; i < sizeof(results)/sizeof(results[0]); i++) {
