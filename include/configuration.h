@@ -4,17 +4,21 @@
 #include "main.h"
 
 struct config {
-    char* log_name;
-    char* stat_name;
 
-    int alarm_time;
+    char* log_name; //nome do ficheiro de log
+    char* stat_name; //nome do ficheiro de estatística
+
+    int alarm_time; //tempo de alarme
 };
 
-/* Função que lê os argumentos da aplicação, nomeadamente o número
+/* Função que lê os parâmetros do ficheiro config.txt, nomeadamente o número
 * máximo de operações, o tamanho dos buffers de memória partilhada
 * usados para comunicação, e o número de clientes, de motoristas e de
 * restaurantes. Guarda esta informação nos campos apropriados da
 * estrutura main_data.
+*
+* Lê também o o nome do ficheiro de log, o nome do ficheiro de estatística e 
+* o tempo de alarme. Guarda esta informação na estrutura de dados config.
 */
-void get_config_params(struct main_data *data);
+void get_config_params(struct main_data *data, struct config *config);
 
