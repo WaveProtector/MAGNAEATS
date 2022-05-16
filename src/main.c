@@ -85,7 +85,7 @@ void create_shared_memory_buffers(struct main_data* data, struct communication_b
 void launch_processes(struct communication_buffers* buffers, struct main_data* data, struct semaphores* sems) {
 
 	for (int i = 0; i < data->n_restaurants; i++) {
-		*(data->restaurant_pids + i) = launch_restaurant (i + 1, buffers, data, sems);
+		*(data->restaurant_pids + i) = launch_restaurant (i + 1, buffers, data, sems); //o id aqui está mal, porque o utilizador é que mete o id temos de resolver isto
 	}
 
 	for (int i = 0; i < data->n_clients; i++) {
