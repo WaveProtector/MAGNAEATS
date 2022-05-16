@@ -3,19 +3,19 @@
 #include "string.h";
 
 void register_start_time(struct operation op) {
-    time(op.start_time);
+    time(op.start_time.tv_sec);
 }
 
 void register_rest_time(struct operation op) {
-    time(op.rest_time);
+    time(op.rest_time.tv_sec);
 }
 
 void register_driver_time(struct operation op) {
-    time(op.driver_time);
+    time(op.driver_time.tv_sec);
 }
 
 void register_driver_time(struct operation op) {
-    clock_gettime(CLOCK_REALTIME, &op.client_end_time);
+    time(op.client_end_time.tv_sec);
 }
 
 char* timespec_to_date(struct timespec time) {

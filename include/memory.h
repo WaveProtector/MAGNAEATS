@@ -41,12 +41,12 @@ struct operation {
 	int receiving_driver;		//id do motorista que fez entrega
 	int receiving_client;		//id do cliente que recebeu a encomenda
 
-	struct timespec *start_time;         //quando o pedido foi criado
-    struct timespec *rest_time;          //quando o restaurante recebeu
+	struct timespec start_time;         //quando o pedido foi criado
+    struct timespec rest_time;          //quando o restaurante recebeu
                                         //o pedido
-    struct timespec *driver_time;        //quando o motorista recebeu
+    struct timespec driver_time;        //quando o motorista recebeu
                                         //o pedido
-    struct timespec *client_end_time;    //quando o cliente recebeu
+    struct timespec client_end_time;    //quando o cliente recebeu
                                         //e finalizou o pedido
 };
 
