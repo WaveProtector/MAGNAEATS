@@ -1,110 +1,129 @@
-#include "stats.h";
-#include "stdio.h";
-#include "string.h";
+#include "stats.h"
+#include "stdio.h"
+#include "string.h"
 
 void execute_stats(struct main_data* data) {
-    FILE *config = fopen("config.txt", "r");
-    char* line;
-    int count = 0;
-    int lineNumber = 6;
-    char* file_name;
+    //Depois alterar isto para uma linha quando o brás fizer a função auxiliar
+	FILE *config = fopen("../config.txt", "r");
+    char line[100]; //linhas lidas do config.txt
+	char file_src[50] = "../";
+	char* file_name;
+    int count = 0; //count para sabermos quantas linhas já foram lidas
+    int lineNumber = 6; //linha em que aparece o nome do ficheiro
+	char foundLine = 0; //"booleano" para parar o while se encontrarmos a linha que contem o nome do ficheiro para o stats
 
-    while (fgets(line, sizeof line, config) != NULL) {
-        if(count == lineNumber) {
-            file_name = line;
-        } else {
-            count++;
-        }
-    }
+	while (foundLine == 0) { //Se a linha não for encontrada continuamos a ler até encontrarmos, isto é, vamos pondo as linhas em "line" até encontrarmos a linha que queremos
+		fgets(line, sizeof line, config);
+		if (count == lineNumber) {
+			file_name = strcat(file_src, line); //para depois criarem um ficheiro fora do src senão os professores ficam putos conosco 
+			foundLine++;
+			printf("Este é o file name %s", file_name); //só para veres qual é a linha que foi lida, depois podes apagar isto
+		} else {
+			count++;
+		}
+	}
+
     fclose(config);
     
     FILE *stats = fopen(file_name, "w");
-    count = 0;
-    char* res_output = restaurants_prep_req(data->restaurant_stats, data->restaurant_pids);
-    while(count < sizeof(res_output)/sizeof(res_output)) { //tanto faz meter size dos restaurantes ou clientes ou drivers, pois vamos sempre ter o mesmo número
-        fputs("Process Statistics:\n", stats);
-        fputs(res_output[count], stats);
-        fputs(drivers_prep_req(data->driver_stats, data->driver_pids)[count], stats);
-        fputs(clients_prep_req(data->client_stats, data->client_pids)[count], stats);
-    }
+
+    fputs("Process Statistics:\n", stats);
+    restaurants_prep_req(data->restaurant_stats, data->restaurant_pids, stats);
+    drivers_prep_req(data->driver_stats, data->driver_pids, stats);
+    clients_prep_req(data->client_stats, data->client_pids, stats);
+
     fputs("Request Statistics:\n", stats);
-    fputs(req_stats(data->results), stats);
+    req_stats(data->results, stats);
     fclose(stats);
 }
 
-char* restaurants_prep_req(int* restaurant_stats, int *restaurant_pids) {
-    static char* output[(sizeof(restaurant_stats)/sizeof(restaurant_stats[0])) * 2]; //Este é um array de strings, assim fica mais fácil fazer cada linha no ciclo for
-    char rest_id[10];
+void restaurants_prep_req(int* restaurant_stats, int *restaurant_pids, FILE *stats) {
+    char output[500];
+	char rest_id[10];
     char num_stats[10];
-    for(int i = 0; i < sizeof(restaurant_stats)/sizeof(restaurant_stats[0]); i++) {
+    for(int i = 0; i < (sizeof(restaurant_stats)/sizeof(restaurant_stats[0])) - 1; i++) { //AVISO - O '-1' no final daqueles sizeof é capaz de dar problema, se der podem tirar, se não deixem estar
         sprintf(rest_id, " %d ", restaurant_pids[i]);       //passamos de int para string
         sprintf(num_stats, " %d ", restaurant_stats[i]);
 
-        output[i] = strcat("Restaurant ", rest_id);         //e fazemos concat de várias strings até termos a string completa
-        output[i] = strcat(output[i], " prepared ");
-        output[i] = strcat(output[i], num_stats);
-        output[i] = strcat(output[i], " requests!");
+        strcat(output, "Restaurant ");		//e fazemos concat de várias strings até termos a string completa
+		strcat(output, rest_id);
+        strcat(output, " prepared ");
+        strcat(output, num_stats);
+        strcat(output, " requests!\n");
+
+        fputs(output, stats); //metemos a string no ficheiro e passamos para a próxima se houver
     }
-    return output; //retornamos o array de strings
 }
 
-char* drivers_prep_req(int* driver_stats, int *driver_pids) {
-    char* output[(sizeof(driver_stats)/sizeof(driver_stats[0])) * 2];
-    char driver_id[10];
+void drivers_prep_req(int* driver_stats, int *driver_pids, FILE *stats) {
+    char output[500];
+	char driver_id[10];
     char num_stats[10];
-    for(int i = 0; i < sizeof(driver_stats)/sizeof(driver_stats[0]); i++) {
+    for(int i = 0; i < (sizeof(driver_stats)/sizeof(driver_stats[0])) - 1; i++) {
         sprintf(driver_id, " %d ", driver_pids[i]);
         sprintf(num_stats, " %d ", driver_stats[i]);
-        output[i] = strcat("Driver ", driver_id);
-        output[i] = strcat(output[i], " delivered ");
-        output[i] = strcat(output[i], num_stats);
-        output[i] = strcat(output[i], " requests!");
+
+        strcat(output, "Driver ");
+		strcat(output, driver_id);
+        strcat(output, " delivered ");
+        strcat(output, num_stats);
+        strcat(output, " requests!\n");
+
+        fputs(output, stats);
     }
-    return output;
 }
 
-char* clients_prep_req(int* client_stats, int *client_pids) {
-    char* output[(sizeof(client_stats)/sizeof(client_stats[0])) * 2];
-    char client_id[10];
+void clients_prep_req(int* client_stats, int *client_pids, FILE *stats) {
+    char output[500];
+	char client_id[10];
     char num_stats[10];
-    for(int i = 0; i < sizeof(client_stats)/sizeof(client_stats[0]); i++) {
+    for(int i = 0; i < (sizeof(client_stats)/sizeof(client_stats[0])) - 1; i++) {
         sprintf(client_id, " %d ", client_pids[i]);
         sprintf(num_stats, " %d ", client_stats[i]);
-        output[i] = strcat("Client ", client_id);
-        output[i] = strcat(output[i], " received ");
-        output[i] = strcat(output[i], num_stats);
-        output[i] = strcat(output[i], " requests!");
+
+        strcat(output, "Driver ");
+		strcat(output, client_id);
+        strcat(output, " delivered ");
+        strcat(output, num_stats);
+        strcat(output, " requests!\n");
+
+        fputs(output, stats);
     }
-    return output;
 }
 
-char* req_stats(struct operation* results) {
-    char* output[(sizeof(results)/sizeof(results[0])) * 2];
+void req_stats(struct operation* results, FILE *stats) {
+    char output[500];
     char result_num[10];
     char rest_id[10];
     char driver_id[10];
     char client_id[10];
     struct timespec total_time;
 
-    for(int i = 0; i < sizeof(results)/sizeof(results[0]); i++) {
+    for(int i = 0; i < (sizeof(results)/sizeof(results[0])) - 1; i++) {
         sprintf(result_num, " %d\n", i);
         sprintf(rest_id, " %d\n", results[i].receiving_rest);
         sprintf(driver_id, " %d\n", results[i].receiving_driver);
         sprintf(client_id, " %d\n", results[i].receiving_client);
 
-        output[i] = strcat("Request: ", result_num);
+        strcat(output, "Request: ");
+        strcat(output, result_num);
+        strcat(output, "\n");
 
-        output[i] = strcat(output, "Status: ");
-        output[i] = strcat(output, results[i].status);
+        strcat(output, "Status: ");
+        strcat(output, results[i].status);
+        strcat(output, "\n");
 
-        output[i] = strcat(output, "Restaurant id: ");
-        output[i] = strcat(output, rest_id);
+        strcat(output, "Restaurant id: ");
+        strcat(output, rest_id);
+        strcat(output, "\n");
 
-        output[i] = strcat(output, "Driver id: ");
-        output[i] = strcat(output, driver_id);
+        strcat(output, "Driver id: ");
+        strcat(output, driver_id);
+        strcat(output, "\n");
 
-        output[i] = strcat(output, "Client id: ");
-        output[i] = strcat(output, client_id);
+        strcat(output, "Client id: ");
+        strcat(output, client_id);
+        strcat(output, "\n");
 
         output[i] = strcat(output, "Created: ");
         output[i] = strcat(output, timespec_to_date(results[i].start_time));
