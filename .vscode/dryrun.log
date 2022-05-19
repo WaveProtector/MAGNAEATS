@@ -1,13 +1,5 @@
-make --dry-run --always-make --keep-going --print-directory
-<<<<<<< HEAD
-make: Entering directory '/home/aluno-di/Desktop/MAGNAEATS'
-=======
-<<<<<<< HEAD
-make: Entering directory '/home/joaocavalcanti/Desktop/MAGNAEATS'
-=======
+make --dry-run --keep-going --print-directory
 make: Entering directory '/home/aluno-di/Projeto SO/clone/MAGNAEATS'
->>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
->>>>>>> e924602eed856c60ebb171826ae3706078a6e7a8
 gcc  -g -I include -o obj/main.o -c src/main.c
 gcc -Wall -g -I include -o obj/client.o -c src/client.c
 gcc -Wall -g -I include -o obj/driver.o -c src/driver.c
@@ -15,13 +7,5 @@ gcc -Wall -g -I include -o obj/memory.o -c src/memory.c
 gcc -Wall -g -I include -o obj/process.o -c src/process.c
 gcc -Wall -g -I include -o obj/restaurant.o -c src/restaurant.c
 gcc obj/main.o obj/client.o obj/driver.o obj/memory.o obj/process.o obj/restaurant.o -o bin/magnaeats -lrt
-<<<<<<< HEAD
-make: Leaving directory '/home/aluno-di/Desktop/MAGNAEATS'
-=======
-<<<<<<< HEAD
-make: Leaving directory '/home/joaocavalcanti/Desktop/MAGNAEATS'
-=======
 make: Leaving directory '/home/aluno-di/Projeto SO/clone/MAGNAEATS'
->>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
->>>>>>> e924602eed856c60ebb171826ae3706078a6e7a8
  

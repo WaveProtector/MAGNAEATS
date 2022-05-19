@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
 //init data structures
 	struct main_data* data = create_dynamic_memory(sizeof(struct
 	main_data));
-	struct communication_buffers* buffers =
+	struct communication_buffers* buffers = 
 	create_dynamic_memory(sizeof(struct communication_buffers));
 	buffers->main_rest = create_dynamic_memory(sizeof(struct
 	rnd_access_buffer));
@@ -86,7 +86,7 @@ void create_shared_memory_buffers(struct main_data* data, struct communication_b
 void launch_processes(struct communication_buffers* buffers, struct main_data* data, struct semaphores* sems) {
 
 	for (int i = 0; i < data->n_restaurants; i++) {
-		*(data->restaurant_pids + i) = launch_restaurant (i + 1, buffers, data, sems); //o id aqui está mal, porque o utilizador é que mete o id temos de resolver isto
+		*(data->restaurant_pids + i) = launch_restaurant (i + 1, buffers, data, sems);
 	}
 
 	for (int i = 0; i < data->n_clients; i++) {
