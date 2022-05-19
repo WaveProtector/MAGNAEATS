@@ -39,3 +39,26 @@ void create_alarm(struct main_data *data, struct config config)
       pause();
    }
 }
+
+void ctrlC (int sig, struct main_data* data, struct semaphores* sems) {
+   printf("Stop Execution \n");
+   stop_execution(data, sems);
+
+   //garantir que todos os processos capturem o sinal
+   pid_t my_ppid = getppid();
+   kill(my_ppid, SIGINT); 
+}
+
+void signal_ctrlC(struct main_data* data, struct semaphores* sems) {
+
+   struct sigaction sa;
+   sa.sa_handler = ctrlC;
+   sa.sa_flags = 0;
+   sigemptyset(&sa.sa_mask);
+
+   if (sigaction(SIGINT, &sa, NULL) == -1) {
+      perror("main:");
+      exit(-1); 
+   }
+
+}

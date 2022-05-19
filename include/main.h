@@ -79,7 +79,7 @@ void read_status(struct main_data* data, struct semaphores* sems);
 * os semáforos e zonas de memória partilhada e dinâmica previamente 
 *reservadas. Para tal, pode usar as outras funções auxiliares do main.h.
 */
-void stop_execution(struct main_data* data, struct communication_buffers* buffers, struct semaphores* sems);
+void stop_execution(struct main_data* data, struct semaphores* sems);
 
 /* Função que espera que todos os processos previamente iniciados terminem,
 * incluindo restaurantes, motoristas e clientes. Para tal, pode usar a função 

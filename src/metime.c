@@ -1,6 +1,6 @@
 #include "metime.h"
-#include "stdio.h";
-#include "string.h";
+#include "stdio.h"
+#include "string.h"
 
 void register_start_time(struct operation op) {
     clock_gettime(CLOCK_REALTIME, &op.start_time);
