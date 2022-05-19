@@ -1,7 +1,12 @@
+//Projeto - 2ª fase realizado pelo grupo 21:
+//João Assis, fc56325
+//José Brás, fc55449
+//Ricardo Mateus, fc56366
+
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "main.h"
+#include <main.h>
 
 struct config {
 

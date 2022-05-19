@@ -1,7 +1,11 @@
-#include "metime.h"
-#include "string.h"
-#include "stdio.h"
-#include <sys/time.h>
+//Projeto - 2ª fase realizado pelo grupo 21:
+//João Assis, fc56325
+//José Brás, fc55449
+//Ricardo Mateus, fc56366
+
+#include <metime.h>
+#include <string.h>
+#include <stdio.h>
 
 char* le_nome_ficheiro () {
     FILE *config = fopen("../config.txt", "r");

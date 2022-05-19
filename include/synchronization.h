@@ -1,3 +1,8 @@
+//Projeto - 2ª fase realizado pelo grupo 21:
+//João Assis, fc56325
+//José Brás, fc55449
+//Ricardo Mateus, fc56366
+
 #ifndef SYNCHRONIZATION_H_GUARD
 #define SYNCHRONIZATION_H_GUARD
 

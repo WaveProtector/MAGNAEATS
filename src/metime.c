@@ -1,6 +1,11 @@
-#include "metime.h"
-#include "stdio.h"
-#include "string.h"
+//Projeto - 2ª fase realizado pelo grupo 21:
+//João Assis, fc56325
+//José Brás, fc55449
+//Ricardo Mateus, fc56366
+
+#include <metime.h>
+#include <stdio.h>
+#include <string.h>
 
 void register_start_time(struct operation op) {
     clock_gettime(CLOCK_REALTIME, &op.start_time);

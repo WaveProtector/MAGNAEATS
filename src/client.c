@@ -1,11 +1,11 @@
-//Projeto - 1ª fase realizado pelo grupo 21:
-// João Assis, fc56325
-// José Brás, fc55449
-// Ricardo Mateus, fc56366
+//Projeto - 2ª fase realizado pelo grupo 21:
+//João Assis, fc56325
+//José Brás, fc55449
+//Ricardo Mateus, fc56366
 
-#include "client.h"
-#include "stdio.h"
-#include "metime.h"
+#include <client.h>
+#include <stdio.h>
+#include <metime.h>
 
 int execute_client(int client_id, struct communication_buffers* buffers, struct main_data* data, struct semaphores* sems) {
     int processed_ops, i;

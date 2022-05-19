@@ -1,4 +1,9 @@
-#include "configuration.h"
+//Projeto - 2ª fase realizado pelo grupo 21:
+//João Assis, fc56325
+//José Brás, fc55449
+//Ricardo Mateus, fc56366
+
+#include <configuration.h>
 #define MAXLINHA 64
 
 void get_config_params(struct main_data* data, struct config *config)

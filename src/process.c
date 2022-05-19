@@ -1,16 +1,16 @@
-//Projeto - 1ª fase realizado pelo grupo 21:
-// João Assis, fc56325
-// José Brás, fc55449
-// Ricardo Mateus, fc56366
+//Projeto - 2ª fase realizado pelo grupo 21:
+//João Assis, fc56325
+//José Brás, fc55449
+//Ricardo Mateus, fc56366
 
-#include "unistd.h"
-#include "stdlib.h"
-#include "process.h"
-#include "driver.h"
-#include "client.h"
-#include "restaurant.h"
-#include "sys/types.h"
-#include "sys/wait.h"
+#include <unistd.h>
+#include <stdlib.h>
+#include <process.h>
+#include <driver.h>
+#include <client.h>
+#include <restaurant.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 
 int launch_restaurant(int restaurant_id, struct communication_buffers* buffers, struct main_data* data, struct semaphores* sems) {

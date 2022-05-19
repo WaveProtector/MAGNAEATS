@@ -1,8 +1,13 @@
+//Projeto - 2ª fase realizado pelo grupo 21:
+//João Assis, fc56325
+//José Brás, fc55449
+//Ricardo Mateus, fc56366
+
 #ifndef PROCESS_H_GUARD
 #define PROCESS_H_GUARD
 
-#include "memory.h"
-#include "main.h"
+#include <memory.h>
+#include <main.h>
 
 /* Função que inicia um novo processo restaurante através da função fork do SO. O novo
 * processo irá executar a função execute_restaurant respetiva, fazendo exit do retorno.

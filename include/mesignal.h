@@ -1,6 +1,11 @@
-#include "memory.h"
-#include "main.h"
-#include "configuration.h"
+//Projeto - 2ª fase realizado pelo grupo 21:
+//João Assis, fc56325
+//José Brás, fc55449
+//Ricardo Mateus, fc56366
+
+#include <memory.h>
+#include <main.h>
+#include <configuration.h>
 #include <stdio.h>
 #include <signal.h>
 #include <unistd.h>

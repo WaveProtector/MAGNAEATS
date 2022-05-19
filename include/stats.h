@@ -1,5 +1,10 @@
-#include "main.h"
-#include "metime.h"
+//Projeto - 2ª fase realizado pelo grupo 21:
+//João Assis, fc56325
+//José Brás, fc55449
+//Ricardo Mateus, fc56366
+
+#include <main.h>
+#include <metime.h>
 
 /* Função que escreve as estatísticas finais do magnaeats, incluindo as
 * estatísticas de todos os processos e de todos os pedidos, para um 

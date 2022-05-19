@@ -1,8 +1,13 @@
+//Projeto - 2ª fase realizado pelo grupo 21:
+//João Assis, fc56325
+//José Brás, fc55449
+//Ricardo Mateus, fc56366
+
 #ifndef MAIN_H_GUARD
 #define MAIN_H_GUARD
 
-#include "memory.h"
-#include "synchronization.h"
+#include <memory.h>
+#include <synchronization.h>
 
 //Estrutura que agrega a informação necessária pela main do MAGNAEATS.
 struct main_data {

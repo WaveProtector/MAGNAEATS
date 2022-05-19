@@ -1,5 +1,10 @@
-#include "synchronization.h"
-#include "fcntl.h"
+//Projeto - 2ª fase realizado pelo grupo 21:
+//João Assis, fc56325
+//José Brás, fc55449
+//Ricardo Mateus, fc56366
+
+#include <synchronization.h>
+#include <fcntl.h>
 
 sem_t * semaphore_create(char* name, int value) {
     return sem_open(name, O_CREAT, 0xFFFFFFFF, value);

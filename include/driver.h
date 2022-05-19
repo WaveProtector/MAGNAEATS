@@ -1,8 +1,13 @@
+//Projeto - 2ª fase realizado pelo grupo 21:
+//João Assis, fc56325
+//José Brás, fc55449
+//Ricardo Mateus, fc56366
+
 #ifndef DRIVER_H_GUARD
 #define DRIVER_H_GUARD
 
-#include "memory.h"
-#include "main.h"
+#include <memory.h>
+#include <main.h>
 
 /* Função principal de um Motorista. Deve executar um ciclo infinito onde em 
 * cada iteração lê uma operação dos restaurantes e se a mesma tiver id 

@@ -1,18 +1,18 @@
-//Projeto - 1ª fase realizado pelo grupo 21:
-// João Assis, fc56325
-// José Brás, fc55449
-// Ricardo Mateus, fc56366
+//Projeto - 2ª fase realizado pelo grupo 21:
+//João Assis, fc56325
+//José Brás, fc55449
+//Ricardo Mateus, fc56366
 
-#include "stdio.h"
-#include "stdlib.h"
-#include "main.h"
-#include "process.h"
-#include "configuration.h"
-#include "string.h"
-#include "ctype.h"
-#include "metime.h"
-#include "unistd.h"
-#include "log.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <main.h>
+#include <process.h>
+#include <configuration.h>
+#include <string.h>
+#include <ctype.h>
+#include <metime.h>
+#include <unistd.h>
+#include <log.h>
 
 int isnumber(char *arg) {
 	int i;

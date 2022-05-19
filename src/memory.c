@@ -1,16 +1,16 @@
-//Projeto - 1ª fase realizado pelo grupo 21:
-// João Assis, fc56325
-// José Brás, fc55449
-// Ricardo Mateus, fc56366
+//Projeto - 2ª fase realizado pelo grupo 21:
+//João Assis, fc56325
+//José Brás, fc55449
+//Ricardo Mateus, fc56366
 
-#include "stdio.h"
-#include "stdlib.h"
-#include "main.h"
-#include "sys/mman.h"
-#include "sys/stat.h" 
-#include "sys/shm.h"   
-#include "fcntl.h"  
-#include "unistd.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <main.h>
+#include <sys/mman.h>
+#include <sys/stat.h> 
+#include <sys/shm.h>  
+#include <fcntl.h> 
+#include <unistd.h>
 
 void* create_shared_memory(char* name, int size) {
     int *ptr;

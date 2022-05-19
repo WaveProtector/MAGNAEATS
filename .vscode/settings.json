@@ -3,7 +3,8 @@
         "stdlib.h": "c",
         "stats.h": "c",
         "string.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "restaurant.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
