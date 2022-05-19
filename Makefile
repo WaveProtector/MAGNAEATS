@@ -15,4 +15,16 @@ process.o: src/process.c include/process.h
 	gcc -Wall -g -I include -o obj/process.o -c src/process.c
 restaurant.o: src/restaurant.c include/restaurant.h
 	gcc -Wall -g -I include -o obj/restaurant.o -c src/restaurant.c
+configuration.o: src/configuration.c include/configuration.h
+	gcc -Wall -g -I include -o obj/configuration.o -c src/configuration.c
+stats.o: src/stats.c include/stats.h
+	gcc -Wall -g -I include -o obj/stats.o -c src/stats.c
+synchronization.o: src/synchronization.c include/synchronization.h
+	gcc -Wall -g -I include -o obj/synchronization.o -c src/synchronization.c
+metime.o: src/metime.c include/metime.h
+	gcc -Wall -g -I include -o obj/metime.o -c src/metime.c
+mesignal.o: src/mesignal.c include/mesignal.h
+	gcc -Wall -g -I include -o obj/mesignal.o -c src/mesignal.c
+log.o: src/log.c include/log.h
+	gcc -Wall -g -I include -o obj/log.o -c src/log.c
 

@@ -12,6 +12,7 @@
 #include "ctype.h"
 #include "metime.h"
 #include "unistd.h"
+#include "log.h"
 
 int isnumber(char *arg) {
 	int i;
@@ -42,7 +43,7 @@ int main(int argc, char *argv[]) {
 	sems->rest_driv = create_dynamic_memory(sizeof(struct prodcons));
 	sems->driv_cli = create_dynamic_memory(sizeof(struct prodcons));
 //execute main code
-	config_get_params(data);
+	get_config_params(data);
 	create_dynamic_memory_buffers(data);
 	create_shared_memory_buffers(data, buffers);
 	create_semaphores(data, sems);
@@ -111,15 +112,15 @@ void user_interaction(struct communication_buffers* buffers, struct main_data* d
 	    scanf("%s", s);
 
 	    if (strcmp(s, "request") == 0) {
-			create_request(c, buffers, data);
+			create_request(c, buffers, data, sems);
 		}
 
 	    else if (strcmp(s, "status") == 0) {
-			read_status(data);
+			read_status(data, sems);
 	    }
 
 	    else if (strcmp(s, "stop") == 0) {
-		    stop_execution(data, buffers);
+		    stop_execution(data, sems);
 	    }
 
 	    else if (strcmp(s, "help") == 0) {
@@ -137,7 +138,7 @@ void user_interaction(struct communication_buffers* buffers, struct main_data* d
 
 }
 
-void create_request(int* op_counter, struct communication_buffers* buffers, struct main_data* data) {
+void create_request(int* op_counter, struct communication_buffers* buffers, struct main_data* data, struct semaphores* sems) {
 
     if (*op_counter < data->max_ops) {
 
@@ -169,7 +170,7 @@ void create_request(int* op_counter, struct communication_buffers* buffers, stru
 	}
 }
 
-void read_status(struct main_data* data) {
+void read_status(struct main_data* data, struct semaphores* sems) {
 
     int c;
 
@@ -204,7 +205,7 @@ void read_status(struct main_data* data) {
 	}
 }
 
-void stop_execution(struct main_data* data, struct communication_buffers* buffers) {
+void stop_execution(struct main_data* data, struct semaphores* sems) {
 	*data->terminate = 1;
 	wait_processes(data);
 	write_statistics(data);
