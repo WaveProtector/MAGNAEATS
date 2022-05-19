@@ -24,12 +24,12 @@ void register_client_end_time(struct operation op) {
 }
 
 char* timespec_to_date(struct timespec time) {
-    static char output[255]; //sem o static dá erro de compilação
-    char ms[10]; //milisegundos
-    sprintf(ms, "%3.0f", (time.tv_nsec / 1.0e6)); //convertemos os nanosegundos para milisegundos
-    struct tm *current_tm = localtime(time.tv_sec); //passamos de timespec para tm usando os segundos do timespec para conseguirmos usar o strftime
-    strftime(output, 30, "%Y-%m-%d %H:%M:%S.", current_tm); //formatamos a data para o tipo que queremos
-    strcat(output, ms); //concatenamos a string da data para os milisegundos aparecerem no final
+    static char output[255];
+    char ms[10];
+    sprintf(ms, "%3.0f", (time.tv_nsec / 1.0e6));
+    struct tm *current_tm = localtime(time.tv_sec);
+    strftime(output, 30, "%Y-%m-%d %H:%M:%S.", current_tm);
+    strcat(output, ms);
     return output;
 }
 

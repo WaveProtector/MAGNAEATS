@@ -18,7 +18,7 @@ int execute_driver(int driver_id, struct communication_buffers* buffers, struct 
             i = 0;
                 
         driver_receive_operation(op, buffers, data, sems); 
-        register_driver_time(*op); //regista a instância de tempo em que a operação foi recebida pelo driver
+        register_driver_time(*op);
 
         if (op->id > 0 && *data->terminate == 0) {
             driver_process_operation(op, driver_id, data, pro, sems);
@@ -39,7 +39,7 @@ void driver_receive_operation(struct operation* op, struct communication_buffers
     }
 }
 
-void driver_process_operation(struct operation* op, int driver_id, struct main_data* data, int* counter, struct semaphores* sems) { //que semáforos usamos aqui?
+void driver_process_operation(struct operation* op, int driver_id, struct main_data* data, int* counter, struct semaphores* sems) {
     op->receiving_driver = driver_id;
     op->status = 'D';
     int i;

@@ -9,19 +9,18 @@
 
 void execute_stats(struct main_data* data) {
 	FILE *config = fopen("../config.txt", "r");
-    char line[100]; //linhas lidas do config.txt
+    char line[100];
 	char file_src[50] = "../";
 	char* file_name;
-    int count = 0; //count para sabermos quantas linhas já foram lidas
-    int lineNumber = 6; //linha em que aparece o nome do ficheiro
-	char foundLine = 0; //"booleano" para parar o while se encontrarmos a linha que contem o nome do ficheiro para o stats
+    int count = 0;
+    int lineNumber = 6;
+	char foundLine = 0;
 
-	while (foundLine == 0) { //Se a linha não for encontrada continuamos a ler até encontrarmos, isto é, vamos pondo as linhas em "line" até encontrarmos a linha que queremos
+	while (foundLine == 0) {
 		fgets(line, sizeof line, config);
 		if (count == lineNumber) {
-			file_name = strcat(file_src, line); //para depois criarem um ficheiro fora do src senão os professores ficam putos conosco 
+			file_name = strcat(file_src, line);
 			foundLine++;
-			printf("Este é o file name %s", file_name); //só para veres qual é a linha que foi lida, depois podes apagar isto
 		} else {
 			count++;
 		}
@@ -30,7 +29,6 @@ void execute_stats(struct main_data* data) {
     fclose(config);
     
     FILE *stats = fopen(file_name, "w");
-
     fputs("Process Statistics:\n", stats);
     restaurants_prep_req(data->restaurant_stats, data->restaurant_pids, stats);
     drivers_prep_req(data->driver_stats, data->driver_pids, stats);
@@ -45,17 +43,17 @@ void restaurants_prep_req(int* restaurant_stats, int *restaurant_pids, FILE *sta
     char output[500];
 	char rest_id[10];
     char num_stats[10];
-    for(int i = 0; i < (sizeof(restaurant_stats)/sizeof(restaurant_stats[0])) - 1; i++) { //AVISO - O '-1' no final daqueles sizeof é capaz de dar problema, se der podem tirar, se não deixem estar
-        sprintf(rest_id, " %d ", restaurant_pids[i]);       //passamos de int para string
+    for(int i = 0; i < (sizeof(restaurant_stats)/sizeof(restaurant_stats[0])) - 1; i++) {
+        sprintf(rest_id, " %d ", restaurant_pids[i]);       
         sprintf(num_stats, " %d ", restaurant_stats[i]);
 
-        strcat(output, "Restaurant ");		//e fazemos concat de várias strings até termos a string completa
+        strcat(output, "Restaurant ");
 		strcat(output, rest_id);
         strcat(output, " prepared ");
         strcat(output, num_stats);
         strcat(output, " requests!\n");
 
-        fputs(output, stats); //metemos a string no ficheiro e passamos para a próxima se houver
+        fputs(output, stats);
     }
 }
 
