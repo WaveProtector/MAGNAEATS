@@ -1,4 +1,4 @@
-Projeto - 1ª fase realizado pelo grupo 21:
+Projeto - 2ª fase realizado pelo grupo 21:
 João Assis, fc56325
 José Brás, fc55449
 Ricardo Mateus, fc56366
