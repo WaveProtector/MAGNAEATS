@@ -2,34 +2,57 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target 'all'.  Stop.
 
 # GNU Make 4.2.1
+<<<<<<< HEAD
 # Built for aarch64-unknown-linux-gnu
+=======
+# Built for x86_64-pc-linux-gnu
+>>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
 # Copyright (C) 1988-2016 Free Software Foundation, Inc.
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
+<<<<<<< HEAD
 # Make data base, printed on Thu May 19 04:29:37 2022
 
 # Variables
 
 # 'override' directive
 GNUMAKEFLAGS := 
+=======
+# Make data base, printed on Wed May 18 21:30:13 2022
+
+# Variables
+
+>>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
 ?F = $(notdir $?)
 # environment
+<<<<<<< HEAD
 DESKTOP_SESSION = ubuntu
+=======
+PAPERSIZE = a4
+# environment
+DESKTOP_SESSION = xubuntu
+>>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
 # default
 .SHELLFLAGS := -c
 # environment
 XDG_SESSION_CLASS = user
 # environment
+<<<<<<< HEAD
+=======
+SNAP_COMMON = /var/snap/code/common
+# environment
+>>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
 XDG_SESSION_TYPE = x11
 # environment
 VSCODE_LOG_NATIVE = false
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
+<<<<<<< HEAD
 # environment
 IM_CONFIG_PHASE = 1
 # automatic
@@ -52,21 +75,61 @@ _ = /usr/share/code/code
 JOURNAL_STREAM = 9:37284
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
+=======
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# environment
+XAUTHORITY = /home/aluno-di/.Xauthority
+# environment
+GDMSESSION = xubuntu
+# default
+MAKE_VERSION := 4.2.1
+# makefile
+CURDIR := /home/aluno-di/Projeto SO/clone/MAGNAEATS
+# makefile
+SHELL = /bin/sh
+# environment
+SNAP_DATA = /var/snap/code/96
+# environment
+GDM_LANG = pt_PT
+# environment
+VSCODE_NLS_CONFIG = {"locale":"pt-pt","availableLanguages":{},"_languagePackSupport":true}
+# environment
+_ = /snap/code/96/usr/share/code/code
+# environment
+XDG_CONFIG_DIRS = /etc/xdg/xdg-xubuntu:/etc/xdg:/etc/xdg
+# environment
+SNAP_INSTANCE_NAME = code
+# environment
+SNAP_ARCH = amd64
+# environment
+GTK_OVERLAY_SCROLLING = 0
+>>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
 # makefile (from 'Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
 # automatic
 @F = $(notdir $@)
+<<<<<<< HEAD
 # environment
 GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
 # environment
 USERNAME = joaocavalcanti
 # environment
 XDG_DATA_DIRS = /usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+=======
+# 'override' directive
+GNUMAKEFLAGS := 
+# environment
+MAKELEVEL := 0
+# environment
+XDG_DATA_DIRS = /usr/share/xubuntu:/usr/share/xfce4:/usr/local/share:/usr/share:/var/lib/snapd/desktop:/usr/share
+>>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
 # environment
 DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
+<<<<<<< HEAD
 MANAGERPID = 1445
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
@@ -74,11 +137,25 @@ LESSOPEN = | /usr/bin/lesspipe %s
 VSCODE_CWD = /home/joaocavalcanti
 # default
 MAKE_HOST := aarch64-unknown-linux-gnu
+=======
+LESSOPEN = | /usr/bin/lesspipe %s
+# environment
+LC_NAME = pt_PT.UTF-8
+# environment
+VSCODE_CWD = /home/aluno-di
+# environment
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session0
+# environment
+GSETTINGS_SCHEMA_DIR = /snap/code/96/usr/share/glib-2.0/schemas
+# default
+MAKE_HOST := x86_64-pc-linux-gnu
+>>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
 # environment
 PATH = /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
+<<<<<<< HEAD
 SESSION_MANAGER = local/jaojao:@/tmp/.ICE-unix/1655,unix/jaojao:/tmp/.ICE-unix/1655
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
@@ -138,11 +215,101 @@ GNOME_DESKTOP_SESSION_ID = this-is-deprecated
 ^D = $(patsubst %/,%,$(dir $^))
 # environment
 MAKELEVEL := 0
+=======
+SESSION_MANAGER = local/alunodi-VirtualBox:@/tmp/.ICE-unix/1161,unix/alunodi-VirtualBox:/tmp/.ICE-unix/1161
+# environment
+BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
+# environment
+GDK_PIXBUF_MODULE_FILE = /home/aluno-di/snap/code/common/.cache/gdk-pixbuf-loaders.cache
+# environment
+SNAP = /snap/code/96
+# makefile (from 'Makefile', line 1)
+OBJ_dir = obj
+# environment
+SNAP_VERSION = da15b6fd
+# environment
+XDG_MENU_PREFIX = xfce-
+# environment
+VSCODE_LOG_STACK = false
+# environment
+DISABLE_WAYLAND = 1
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# environment
+GDK_PIXBUF_MODULEDIR = /snap/code/96/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
+# environment
+XDG_GREETER_DATA_DIR = /var/lib/lightdm-data/aluno-di
+# environment
+LS_COLORS = 
+# environment
+XDG_SESSION_DESKTOP = xubuntu
+# environment
+SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
+# automatic
+%F = $(notdir $%)
+# environment
+DISPLAY = :0.0
+# environment
+VSCODE_PIPE_LOGGING = true
+# environment
+SNAP_INSTANCE_KEY = 
+# environment
+PWD = /home/aluno-di/Projeto SO/clone/MAGNAEATS
+# environment
+QT_QPA_PLATFORMTHEME = gtk2
+# default
+.LOADED := 
+# environment
+XDG_SEAT = seat0
+# environment
+SSH_AGENT_PID = 1331
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = XFCE
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+HOME = /home/aluno-di
+# environment
+LESSCLOSE = /usr/bin/lesspipe %s %s
+# environment
+VSCODE_CLI = 1
+# environment
+VSCODE_CODE_CACHE_PATH = /home/aluno-di/.config/Code/CachedData/da15b6fd3ef856477bf6f4fb29ba1b7af717770d
+# environment
+LOGNAME = aluno-di
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+# environment
+SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd/void
+# environment
+SNAP_CONTEXT = S1E7zkVqXq-47g_xezy6jZOGEANyF73A8m2AzEk5lAtgLFwJ1Ddc
+# automatic
++F = $(notdir $+)
+# environment
+ELECTRON_NO_ATTACH_CONSOLE = 1
+# environment
+SNAP_USER_COMMON = /home/aluno-di/snap/code/common
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# environment
+XDG_VTNR = 7
+# environment
+CLUTTER_BACKEND = x11
+# environment
+LC_TIME = pt_PT.UTF-8
+# environment
+SNAP_REAL_HOME = /home/aluno-di
+>>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
 # default
 MAKE = $(MAKE_COMMAND)
 # default
 MAKECMDGOALS := all
 # environment
+<<<<<<< HEAD
 QT_IM_MODULE = ibus
 # environment
 SHLVL = 0
@@ -160,6 +327,29 @@ USER = joaocavalcanti
 XDG_CURRENT_DESKTOP = Unity
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
+=======
+SNAP_USER_DATA = /home/aluno-di/snap/code/96
+# environment
+SHLVL = 0
+# environment
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-1a56449b-3708-4768-ba6e-ba02350cfd59.sock
+# environment
+XDG_SESSION_ID = c2
+# environment
+USER = aluno-di
+# environment
+SNAP_REVISION = 96
+# environment
+LC_MONETARY = pt_PT.UTF-8
+# makefile
+.DEFAULT_GOAL := magnaeats
+# environment
+XDG_CURRENT_DESKTOP = XFCE
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# environment
+LC_TELEPHONE = pt_PT.UTF-8
+>>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
 # default
 MAKE_COMMAND := make
 # default
@@ -167,7 +357,17 @@ MAKE_COMMAND := make
 # automatic
 *F = $(notdir $*)
 # environment
+<<<<<<< HEAD
 VSCODE_IPC_HOOK = /run/user/1000/vscode-7ce06673-1.67.0-main.sock
+=======
+LANGUAGE = pt_PT:pt_BR:en
+# environment
+XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
+# environment
+VSCODE_IPC_HOOK = /run/user/1000/vscode-bb965eb7-1.67.1-main.sock
+# environment
+PANEL_GDK_CORE_DEVICE_EVENTS = 0
+>>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
 # makefile
 MAKEFLAGS = pqrR
 # environment
@@ -178,18 +378,38 @@ MFLAGS = -pqrR
 +D = $(patsubst %/,%,$(dir $+))
 # environment
 GDK_BACKEND = x11
+<<<<<<< HEAD
 # automatic
 +F = $(notdir $+)
+=======
+# environment
+LC_PAPER = pt_PT.UTF-8
+>>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
 # environment
 QT_ACCESSIBILITY = 1
 # default
 MAKEFILES := 
+<<<<<<< HEAD
 # automatic
 <F = $(notdir $<)
 # environment
 LC_ALL = C
 # environment
 GJS_DEBUG_TOPICS = JS ERROR;JS LOG
+=======
+# environment
+SNAP_COOKIE = S1E7zkVqXq-47g_xezy6jZOGEANyF73A8m2AzEk5lAtgLFwJ1Ddc
+# environment
+LC_NUMERIC = pt_PT.UTF-8
+# automatic
+<F = $(notdir $<)
+# environment
+LC_MEASUREMENT = pt_PT.UTF-8
+# environment
+SNAP_NAME = code
+# environment
+LC_ALL = C
+>>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
 # automatic
 ^F = $(notdir $^)
 # default
@@ -197,6 +417,7 @@ SUFFIXES :=
 # makefile (from 'Makefile', line 2)
 OBJECTOS = main.o client.o driver.o memory.o process.o restaurant.o
 # environment
+<<<<<<< HEAD
 CHROME_DESKTOP = code-url-handler.desktop
 # environment
 WINDOWPATH = 2
@@ -212,6 +433,27 @@ LANG = C
 VSCODE_PID = 1970
 # variable set hash-table stats:
 # Load=99/1024=10%, Rehash=0, Collisions=13/125=10%
+=======
+SNAP_REEXEC = 
+# environment
+CHROME_DESKTOP = code-url-handler.desktop
+# default
+.INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
+# environment
+LC_IDENTIFICATION = pt_PT.UTF-8
+# default
+.RECIPEPREFIX := 
+# environment
+LC_ADDRESS = pt_PT.UTF-8
+# environment
+XDG_RUNTIME_DIR = /run/user/1000
+# environment
+LANG = C
+# environment
+VSCODE_PID = 1664
+# variable set hash-table stats:
+# Load=129/1024=13%, Rehash=0, Collisions=18/155=12%
+>>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
 
 # Pattern-specific Variable Values
 
@@ -219,9 +461,16 @@ VSCODE_PID = 1970
 
 # Directories
 
+<<<<<<< HEAD
 # . (device 64768, inode 688155): 11 files, no impossibilities.
 
 # 11 files, no impossibilities in 1 directories.
+=======
+# . (device 2053, inode 1182296): 12 files, no impossibilities.
+
+ 
+# 12 files, no impossibilities in 1 directories.
+>>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
 
 # Implicit Rules
 
@@ -262,6 +511,7 @@ src/client.c:
 #  Modification time never checked.
 #  File has not been updated.
 
+<<<<<<< HEAD
 # Not a target:
 include/metime.h:
 #  Implicit rule search has not been done.
@@ -274,6 +524,8 @@ src/metime.c:
 #  Modification time never checked.
 #  File has not been updated.
 
+=======
+>>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
 process.o: src/process.c include/process.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -281,11 +533,18 @@ process.o: src/process.c include/process.h
 #  recipe to execute (from 'Makefile', line 15):
 	gcc -Wall -g -I include -o obj/process.o -c src/process.c
 
+<<<<<<< HEAD
  
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
 #  Last modified 2022-05-19 03:25:29.546299774
+=======
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-05-14 16:51:55.607836017
+>>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
 #  File has been updated.
 #  Successfully updated.
 
@@ -296,6 +555,7 @@ magnaeats: main.o client.o driver.o memory.o process.o restaurant.o
 #  recipe to execute (from 'Makefile', line 5):
 	gcc $(addprefix $(OBJ_dir)/,$(OBJECTOS)) -o bin/magnaeats -lrt
 
+<<<<<<< HEAD
 synchronization.o: src/synchronization.c include/synchronization.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -329,6 +589,8 @@ metime.o: src/metime.c include/metime.h
 #  recipe to execute (from 'Makefile', line 25):
 	gcc -Wall -g -I include -o obj/metime.o -c src/metime.c
 
+=======
+>>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
 # Not a target:
 include/main.h:
 #  Implicit rule search has not been done.
@@ -341,6 +603,7 @@ src/main.c:
 #  Modification time never checked.
 #  File has not been updated.
 
+<<<<<<< HEAD
 configuration.o: src/configuration.c include/configuration.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -355,6 +618,8 @@ stats.o: src/stats.c include/stats.h
 #  recipe to execute (from 'Makefile', line 21):
 	gcc -Wall -g -I include -o obj/stats.o -c src/stats.c
 
+=======
+>>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
 # Not a target:
 include/driver.h:
 #  Implicit rule search has not been done.
@@ -368,6 +633,7 @@ src/driver.c:
 #  File has not been updated.
 
 # Not a target:
+<<<<<<< HEAD
 include/configuration.h:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -380,12 +646,15 @@ src/configuration.c:
 #  File has not been updated.
 
 # Not a target:
+=======
+>>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
 .DEFAULT:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
 # Not a target:
+<<<<<<< HEAD
 include/stats.h:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -398,6 +667,8 @@ src/stats.c:
 #  File has not been updated.
 
 # Not a target:
+=======
+>>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
 include/memory.h:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -410,6 +681,7 @@ src/memory.c:
 #  File has not been updated.
 
 # Not a target:
+<<<<<<< HEAD
 include/log.h:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -422,6 +694,8 @@ src/log.c:
 #  File has not been updated.
 
 # Not a target:
+=======
+>>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
 include/restaurant.h:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -440,6 +714,7 @@ main.o: src/main.c include/main.h
 #  recipe to execute (from 'Makefile', line 7):
 	gcc  -g -I include -o obj/main.o -c src/main.c
 
+<<<<<<< HEAD
 # Not a target:
 include/mesignal.h:
 #  Implicit rule search has not been done.
@@ -452,6 +727,8 @@ src/mesignal.c:
 #  Modification time never checked.
 #  File has not been updated.
 
+=======
+>>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
 restaurant.o: src/restaurant.c include/restaurant.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -478,6 +755,7 @@ memory.o: src/memory.c include/memory.h
 #  recipe to execute (from 'Makefile', line 13):
 	gcc -Wall -g -I include -o obj/memory.o -c src/memory.c 
 
+<<<<<<< HEAD
 log.o: src/log.c include/log.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -487,12 +765,17 @@ log.o: src/log.c include/log.h
 
 # files hash-table stats:
 # Load=41/1024=4%, Rehash=0, Collisions=1/87=1%
+=======
+# files hash-table stats:
+# Load=23/1024=2%, Rehash=0, Collisions=0/57=0%
+>>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
+<<<<<<< HEAD
 # strcache buffers: 1 (0) / strings = 52 / storage = 649 B / avg = 12 B
 # current buf: size = 8162 B / used = 649 B / count = 52 / avg = 12 B
 
@@ -500,5 +783,14 @@ log.o: src/log.c include/log.h
 # hash-table stats:
 # Load=52/8192=1%, Rehash=0, Collisions=1/76=1%
 # Finished Make data base on Thu May 19 04:29:37 2022
+=======
+# strcache buffers: 1 (0) / strings = 35 / storage = 377 B / avg = 10 B
+# current buf: size = 8162 B / used = 377 B / count = 35 / avg = 10 B
+
+# strcache performance: lookups = 53 / hit rate = 33%
+# hash-table stats:
+# Load=35/8192=0%, Rehash=0, Collisions=1/53=2%
+# Finished Make data base on Wed May 18 21:30:13 2022
+>>>>>>> ebdbc670cf1f15cce6fe70075dcb1eb194082f7f
 
  
