@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu May 19 23:44:36 2022
+# Make data base, printed on Fri May 20 00:27:31 2022
 
 # Variables
 
@@ -101,7 +101,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 2048
+GIO_LAUNCHED_DESKTOP_FILE_PID = 6615
 # automatic
 %F = $(notdir $%)
 # environment
@@ -149,7 +149,7 @@ SHLVL = 0
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-737938eb-ce7a-408c-b89f-b424ece572c1.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-09559368-8e49-42be-870c-2aa1207bb7a3.sock
 # default
 MAKE_VERSION := 4.2.1
 # environment
@@ -209,7 +209,7 @@ GJS_DEBUG_OUTPUT = stderr
 # environment
 LANG = C
 # environment
-VSCODE_PID = 2048
+VSCODE_PID = 6615
 # variable set hash-table stats:
 # Load=99/1024=10%, Rehash=0, Collisions=13/125=10%
 
@@ -458,6 +458,7 @@ restaurant.o: src/restaurant.c include/restaurant.h
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 17):
 	gcc -Wall -g -I include -o obj/restaurant.o -c src/restaurant.c
+ 
 
 # Not a target:
 include/process.h:
@@ -499,6 +500,6 @@ log.o: src/log.c include/log.h
 # strcache performance: lookups = 82 / hit rate = 36%
 # hash-table stats:
 # Load=52/8192=1%, Rehash=0, Collisions=1/82=1%
-# Finished Make data base on Thu May 19 23:44:36 2022
+# Finished Make data base on Fri May 20 00:27:31 2022
 
  

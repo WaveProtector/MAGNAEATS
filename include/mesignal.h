@@ -17,6 +17,6 @@ void sig_handler();
 //Cria um alarme que dispara a cada config.alarm_time segundos.
 void create_alarm(struct main_data* data, struct config config);
 
-void ctrlC (int sig, struct main_data* data, struct semaphores* sems);
+void ctrlC (int sig);
 
 void signal_ctrlC(struct main_data* data, struct semaphores* sems);

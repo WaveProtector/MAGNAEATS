@@ -7,6 +7,15 @@
 
 struct operation *op;
 
+struct main_data* d;
+
+struct semaphores* s;
+
+void get_params(struct main_data* data, struct semaphores* sems) {
+   d = data;
+   s = sems;
+}
+
 void sig_handler()
 {
    while (op != NULL)
@@ -45,9 +54,9 @@ void create_alarm(struct main_data *data, struct config config)
    }
 }
 
-void ctrlC (int sig, struct main_data* data, struct semaphores* sems) {
+void ctrlC (int sig) {
    printf("Stop Execution \n");
-   stop_execution(data, sems);
+   stop_execution(d, s);
 
    //garantir que todos os processos capturem o sinal
    pid_t my_ppid = getppid();
@@ -57,7 +66,7 @@ void ctrlC (int sig, struct main_data* data, struct semaphores* sems) {
 void signal_ctrlC(struct main_data* data, struct semaphores* sems) {
 
    struct sigaction sa;
-   sa.sa_handler = ctrlC;
+   sa.sa_handler = &ctrlC;
    sa.sa_flags = 0;
    sigemptyset(&sa.sa_mask);
 

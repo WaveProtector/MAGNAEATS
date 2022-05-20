@@ -1,7 +1,6 @@
-make --dry-run --keep-going --print-directory
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/joaocavalcanti/Desktop/MAGNAEATS'
 gcc  -g -I include -o obj/main.o -c src/main.c
- 
 gcc -Wall -g -I include -o obj/client.o -c src/client.c
 gcc -Wall -g -I include -o obj/driver.o -c src/driver.c
 gcc -Wall -g -I include -o obj/memory.o -c src/memory.c 
