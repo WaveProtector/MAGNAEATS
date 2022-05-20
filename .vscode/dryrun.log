@@ -1,11 +1,18 @@
 make --dry-run --keep-going --print-directory
-make: Entering directory '/home/aluno-di/Projeto SO/clone/MAGNAEATS'
+make: Entering directory '/home/joaocavalcanti/Desktop/MAGNAEATS'
 gcc  -g -I include -o obj/main.o -c src/main.c
+ 
 gcc -Wall -g -I include -o obj/client.o -c src/client.c
 gcc -Wall -g -I include -o obj/driver.o -c src/driver.c
 gcc -Wall -g -I include -o obj/memory.o -c src/memory.c 
 gcc -Wall -g -I include -o obj/process.o -c src/process.c
 gcc -Wall -g -I include -o obj/restaurant.o -c src/restaurant.c
-gcc obj/main.o obj/client.o obj/driver.o obj/memory.o obj/process.o obj/restaurant.o -o bin/magnaeats -lrt
-make: Leaving directory '/home/aluno-di/Projeto SO/clone/MAGNAEATS'
+gcc -Wall -g -I include -o obj/configuration.o -c src/configuration.c
+gcc -Wall -g -I include -o obj/stats.o -c src/stats.c
+gcc -Wall -g -I include -o obj/synchronization.o -c src/synchronization.c
+gcc -Wall -g -I include -o obj/metime.o -c src/metime.c
+gcc -Wall -g -I include -o obj/mesignal.o -c src/mesignal.c
+gcc -Wall -g -I include -o obj/log.o -c src/log.c
+gcc obj/main.o obj/client.o obj/driver.o obj/memory.o obj/process.o obj/restaurant.o obj/configuration.o obj/stats.o obj/synchronization.o obj/metime.o obj/mesignal.o obj/log.o -o bin/magnaeats -lrt
+make: Leaving directory '/home/joaocavalcanti/Desktop/MAGNAEATS'
  

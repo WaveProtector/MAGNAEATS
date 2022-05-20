@@ -1,5 +1,5 @@
 OBJ_dir = obj
-OBJECTOS = main.o client.o driver.o memory.o process.o restaurant.o
+OBJECTOS = main.o client.o driver.o memory.o process.o restaurant.o configuration.o stats.o synchronization.o metime.o mesignal.o log.o
 
 magnaeats: $(OBJECTOS)
 	gcc $(addprefix $(OBJ_dir)/,$(OBJECTOS)) -o bin/magnaeats -lrt

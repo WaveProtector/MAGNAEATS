@@ -8,12 +8,12 @@
 
 void get_config_params(struct main_data* data, struct config *config)
 {
-    FILE *config = fopen("config.txt", "r");
+    FILE *conf = fopen("config.txt", "r");
     char line[8][MAXLINHA];
     int i;
     for (i = 0; i < 8; i++)
     {
-        fgets(line[i], MAXLINHA, config);
+        fgets(line[i], MAXLINHA, conf);
     }
     data->max_ops = atoi(line[0]);
     data->buffers_size = atoi(line[1]);
