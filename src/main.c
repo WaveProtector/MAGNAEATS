@@ -145,12 +145,18 @@ void create_request(int* op_counter, struct communication_buffers* buffers, stru
 
     if (*op_counter < data->max_ops) {
 
-	    char dish[100];
+	    char dish[100], c;
 		int req_cli;
 		int req_rest;
+		int len = 0;
 
 	    printf("Enter your 'client_number restaurant_number dish': \n");
-	    scanf("%d %d %s", &req_cli, &req_rest, dish);	
+	    scanf("%d %d", &req_cli, &req_rest);	
+		while(scanf("%c", &c)==1) {
+        	if(c == '\n')
+          	  break;
+        	dish[len++]=c;
+		}
 
 		if (req_cli != 0 && req_rest != 0 && req_cli <= data->n_clients && req_rest <= data->n_restaurants) { 
 			(*op_counter)++;
@@ -284,14 +290,13 @@ void create_semaphores(struct main_data* data, struct semaphores* sems) {
 	sems->results_mutex = semaphore_create (STR_SEM_RESULTS_MUTEX, 0);
 }
 
-
-/* Função que acorda todos os processos adormecidos em semáforos, para que
-* estes percebam que foi dada ordem de terminação do programa. Para tal,
-* pode ser usada a função produce_end sobre todos os conjuntos de semáforos
-* onde possam estar processos adormecidos e um número de vezes igual ao 
-* máximo de processos que possam lá estar.
-*/
-void wakeup_processes(struct main_data* data, struct semaphores* sems);
+void wakeup_processes(struct main_data* data, struct semaphores* sems) {
+	for(int i = 0; i < data->max_ops; i++) {
+		produce_end(sems->main_rest);
+		produce_end(sems->rest_driv);
+		produce_end(sems->driv_cli); 
+	}
+}
 
 void destroy_semaphores(struct semaphores* sems) {
 	semaphore_destroy(STR_SEM_MAIN_REST_FULL, sems->main_rest->full);

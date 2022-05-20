@@ -41,21 +41,21 @@ void sig_handler()
    }
 }
 
+
 void create_alarm(struct main_data *data, struct config config)
 {
    op = data->results;
    signal(SIGALRM, sig_handler);
    int alarm_time = config.alarm_time;
-   int pid = fork();
-   if (pid == 0)
-   {
-      while (1)
+   
+      while (*data->terminate != 1)
       {
          op = data->results;
          alarm(alarm_time);
          pause();
       }
-   }
+      
+      
 }
 
 void ctrlC(int sig)

@@ -39,8 +39,9 @@ int execute_client(int client_id, struct communication_buffers* buffers, struct 
 
 void client_get_operation(struct operation* op, int client_id, struct communication_buffers* buffers, struct main_data* data, struct semaphores* sems) {
     if (*data->terminate != 1) {
-        sem_wait(sems->driv_cli->full);
+        consume_begin(sems->driv_cli);
         read_driver_client_buffer(buffers->driv_cli, client_id, data->buffers_size, op);
+        consume_end(sems->driv_cli);
     }
 
 }
@@ -51,10 +52,8 @@ void client_process_operation(struct operation* op, int client_id, struct main_d
     int i;
     counter++;
     *(data->client_stats + (op->id - 1)) += 1;
-    sem_wait(sems->driv_cli->mutex);
     for(i = 0; i < data->buffers_size; i++) {
         if((data->results[i]).id == op->id)
             data->results[i] = *op;
     }
-    sem_post(sems->driv_cli->mutex);
 }

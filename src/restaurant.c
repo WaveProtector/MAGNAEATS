@@ -35,8 +35,9 @@ int execute_restaurant(int rest_id, struct communication_buffers* buffers, struc
 
 void restaurant_receive_operation(struct operation* op, int rest_id, struct communication_buffers* buffers, struct main_data* data, struct semaphores* sems) {
     if(*data->terminate != 1) {
-      sem_wait(sems->main_rest->empty);  
+      consume_begin(sems->main_rest);  
       read_main_rest_buffer(buffers->main_rest, rest_id, data->buffers_size, op);
+      consume_end(sems->main_rest);
     }
 
 }
@@ -49,18 +50,20 @@ void restaurant_process_operation(struct operation* op, int rest_id, struct main
     counter++;
     
     *(data->restaurant_stats + (op->id - 1)) += 1;
-    sem_wait(sems->main_rest->mutex);
     for(i = 0; i < data->buffers_size; i++) {
-        if((data->results[i]).id == op->id)
+        if((data->results[i]).id == op->id) {
+             sem_wait(sems->main_rest->mutex);
             data->results[i] = *op;
+        }
     }
     sem_post(sems->main_rest->mutex);
 
 }
 
 void restaurant_forward_operation(struct operation* op, struct communication_buffers* buffers, struct main_data* data, struct semaphores* sems) {
+    produce_begin(sems->rest_driv);
     write_rest_driver_buffer(buffers->rest_driv, data->buffers_size, op);
-    sem_post(sems->rest_driv->full);
+    produce_end(sems->rest_driv);
     
 }
 
