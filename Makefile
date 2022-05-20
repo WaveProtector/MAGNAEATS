@@ -2,7 +2,7 @@ OBJ_dir = obj
 OBJECTOS = main.o client.o driver.o memory.o process.o restaurant.o configuration.o stats.o synchronization.o metime.o mesignal.o log.o
 
 magnaeats: $(OBJECTOS)
-	gcc $(addprefix $(OBJ_dir)/,$(OBJECTOS)) -o bin/magnaeats -lrt
+	gcc $(addprefix $(OBJ_dir)/,$(OBJECTOS)) -o bin/magnaeats -lrt -lpthread
 main.o: src/main.c include/main.h
 	gcc  -g -I include -o obj/main.o -c src/main.c
 client.o: src/client.c include/client.h

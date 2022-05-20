@@ -61,6 +61,8 @@ int main(int argc, char *argv[]) {
 	destroy_dynamic_memory(sems->rest_driv);
 	destroy_dynamic_memory(sems->driv_cli);
 	destroy_dynamic_memory(sems);
+	destroy_semaphores(sems);
+	destroy_memory_buffers(data, buffers);
 }
 
 void create_dynamic_memory_buffers(struct main_data* data) {
@@ -268,5 +270,39 @@ void destroy_memory_buffers(struct main_data* data, struct communication_buffers
 	destroy_shared_memory(STR_SHM_RESULTS, data->results, data->max_ops);
 	destroy_shared_memory(STR_SHM_TERMINATE, data->terminate, sizeof(int));
 	
+}
 
+void create_semaphores(struct main_data* data, struct semaphores* sems) {
+	sems->main_rest->full = semaphore_create(STR_SEM_MAIN_REST_FULL, 0);
+	sems->main_rest->empty = semaphore_create(STR_SEM_MAIN_REST_EMPTY, data->buffers_size);
+	sems->main_rest->mutex = semaphore_create(STR_SEM_MAIN_REST_MUTEX , 0);
+	sems->rest_driv->full = semaphore_create(STR_SEM_REST_DRIV_FULL, 0);
+	sems->rest_driv->empty = semaphore_create(STR_SEM_REST_DRIV_EMPTY, data->buffers_size);
+	sems->rest_driv->mutex = semaphore_create(STR_SEM_REST_DRIV_MUTEX, 0);
+	sems->driv_cli->full = semaphore_create(STR_SEM_DRIV_CLI_FULL, 0);
+	sems->driv_cli->empty = semaphore_create(STR_SEM_DRIV_CLI_EMPTY, data->buffers_size);
+	sems->driv_cli->mutex = semaphore_create(STR_SEM_DRIV_CLI_MUTEX, 0);
+	sems->results_mutex = semaphore_create (STR_SEM_RESULTS_MUTEX, 0);
+}
+
+
+/* Função que acorda todos os processos adormecidos em semáforos, para que
+* estes percebam que foi dada ordem de terminação do programa. Para tal,
+* pode ser usada a função produce_end sobre todos os conjuntos de semáforos
+* onde possam estar processos adormecidos e um número de vezes igual ao 
+* máximo de processos que possam lá estar.
+*/
+void wakeup_processes(struct main_data* data, struct semaphores* sems);
+
+void destroy_semaphores(struct semaphores* sems) {
+	semaphore_destroy(STR_SEM_MAIN_REST_FULL, sems->main_rest->full);
+	semaphore_destroy(STR_SEM_MAIN_REST_EMPTY, sems->main_rest->empty);
+	semaphore_destroy(STR_SEM_MAIN_REST_MUTEX, sems->main_rest->mutex);
+	semaphore_destroy(STR_SEM_REST_DRIV_FULL, sems->rest_driv->full);
+	semaphore_destroy(STR_SEM_REST_DRIV_EMPTY, sems->rest_driv->empty);
+	semaphore_destroy(STR_SEM_REST_DRIV_MUTEX, sems->rest_driv->mutex);
+	semaphore_destroy(STR_SEM_DRIV_CLI_FULL, sems->driv_cli->full);
+	semaphore_destroy(STR_SEM_DRIV_CLI_EMPTY, sems->driv_cli->empty);
+	semaphore_destroy(STR_SEM_DRIV_CLI_MUTEX, sems->driv_cli->mutex);
+	semaphore_destroy(STR_SEM_RESULTS_MUTEX, sems->results_mutex);
 }

@@ -8,7 +8,8 @@
 #include <metime.h>
 
 int execute_driver(int driver_id, struct communication_buffers* buffers, struct main_data* data, struct semaphores* sems) {
-    int processed_ops = 0, i;
+    int processed_ops = 0;;
+    int i = 0;
     int *pro = &processed_ops;
     struct operation aux_op = {0, 0 ,0, "", 'I', 0, 0, 0}; 
     struct operation* op = &aux_op;
