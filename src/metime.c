@@ -27,7 +27,7 @@ char* timespec_to_date(struct timespec time) {
     static char output[255];
     char ms[10];
     sprintf(ms, "%3.0f", (time.tv_nsec / 1.0e6));
-    struct tm *current_tm = localtime(time.tv_sec);
+    struct tm *current_tm = localtime(&time.tv_sec);
     strftime(output, 30, "%Y-%m-%d %H:%M:%S.", current_tm);
     strcat(output, ms);
     return output;
@@ -37,7 +37,7 @@ char* timespec_to_seconds(struct timespec time) {
     static char output[255];
     char ms[10];
     sprintf(ms, "%3.0f", (time.tv_nsec / 1.0e6));
-    struct tm *current_tm = localtime(time.tv_sec);
+    struct tm *current_tm = localtime(&time.tv_sec);
     strftime(output, 30, "%S.", current_tm);
     strcat(output, ms);
     return output;
