@@ -28,8 +28,7 @@ int main(int argc, char *argv[]) {
 //init data structures
 	struct main_data* data = create_dynamic_memory(sizeof(struct
 	main_data));
-	struct communication_buffers* buffers = 
-	create_dynamic_memory(sizeof(struct communication_buffers));
+	struct communication_buffers* buffers = create_dynamic_memory(sizeof(struct communication_buffers));
 	buffers->main_rest = create_dynamic_memory(sizeof(struct
 	rnd_access_buffer));
 	buffers->rest_driv = create_dynamic_memory(sizeof(struct
@@ -43,7 +42,7 @@ int main(int argc, char *argv[]) {
 	sems->rest_driv = create_dynamic_memory(sizeof(struct prodcons));
 	sems->driv_cli = create_dynamic_memory(sizeof(struct prodcons));
 //execute main code
-    struct config conf;
+    struct config conf = {"","",0};
 	struct config *cf = &conf;	
 	get_config_params(data, cf);
 	create_dynamic_memory_buffers(data);
