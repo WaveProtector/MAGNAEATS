@@ -24,7 +24,6 @@ int execute_client(int client_id, struct communication_buffers* buffers, struct 
 
             if (op->id > 0 && *data->terminate == 0) {
                 client_process_operation(op, client_id, data, pro, sems);
-                sem_post(sems->driv_cli->empty);
                 processed_ops++;
                 op->id = -1;
             }
@@ -43,7 +42,6 @@ void client_get_operation(struct operation* op, int client_id, struct communicat
         read_driver_client_buffer(buffers->driv_cli, client_id, data->buffers_size, op);
         consume_end(sems->driv_cli);
     }
-
 }
 
 void client_process_operation(struct operation* op, int client_id, struct main_data* data, int* counter, struct semaphores* sems) {

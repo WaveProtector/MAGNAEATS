@@ -56,11 +56,12 @@ int main(int argc, char *argv[]) {
 	destroy_dynamic_memory(buffers->rest_driv);
 	destroy_dynamic_memory(buffers->driv_cli);
 	destroy_dynamic_memory(buffers);
+	wakeup_processes(data, sems);
+	destroy_semaphores(sems);
 	destroy_dynamic_memory(sems->main_rest);
 	destroy_dynamic_memory(sems->rest_driv);
 	destroy_dynamic_memory(sems->driv_cli);
 	destroy_dynamic_memory(sems);
-	destroy_semaphores(sems);
 	destroy_memory_buffers(data, buffers);
 }
 
@@ -291,11 +292,14 @@ void create_semaphores(struct main_data* data, struct semaphores* sems) {
 }
 
 void wakeup_processes(struct main_data* data, struct semaphores* sems) {
+
 	for(int i = 0; i < data->max_ops; i++) {
 		produce_end(sems->main_rest);
 		produce_end(sems->rest_driv);
-		produce_end(sems->driv_cli); 
+		produce_end(sems->driv_cli);
+		
 	}
+	
 }
 
 void destroy_semaphores(struct semaphores* sems) {
