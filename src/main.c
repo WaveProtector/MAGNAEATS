@@ -50,19 +50,17 @@ int main(int argc, char *argv[]) {
 	create_semaphores(data, sems);
 	launch_processes(buffers, data, sems);
 	user_interaction(buffers, data, sems);
+	destroy_memory_buffers(data, buffers);
 //release memory before terminating
 	destroy_dynamic_memory(data);
 	destroy_dynamic_memory(buffers->main_rest);
 	destroy_dynamic_memory(buffers->rest_driv);
 	destroy_dynamic_memory(buffers->driv_cli);
 	destroy_dynamic_memory(buffers);
-	wakeup_processes(data, sems);
-	destroy_semaphores(sems);
 	destroy_dynamic_memory(sems->main_rest);
 	destroy_dynamic_memory(sems->rest_driv);
 	destroy_dynamic_memory(sems->driv_cli);
 	destroy_dynamic_memory(sems);
-	destroy_memory_buffers(data, buffers);
 }
 
 void create_dynamic_memory_buffers(struct main_data* data) {
@@ -164,8 +162,10 @@ void create_request(int* op_counter, struct communication_buffers* buffers, stru
 			struct operation newOne = {*op_counter, req_rest, req_cli, dish, 'I', 0, 0, 0};
 			register_start_time(newOne); //regista a instância de tempo em que a operação foi criada
 			struct operation *newPoiter = &newOne;
+			produce_begin(sems->main_rest);
 			write_main_rest_buffer(buffers->main_rest, data->buffers_size, newPoiter);
 			data->results[*op_counter - 1] = newOne;
+			produce_end(sems->main_rest);
 			printf("Your order ID: %d \n \n", *op_counter);
 	    }
 
@@ -217,8 +217,10 @@ void read_status(struct main_data* data, struct semaphores* sems) {
 
 void stop_execution(struct main_data* data, struct semaphores* sems) {
 	*data->terminate = 1;
+	wakeup_processes(data, sems);
 	wait_processes(data);
 	write_statistics(data);
+	destroy_semaphores(sems);
 }
 
 void wait_processes(struct main_data* data) {
@@ -281,14 +283,14 @@ void destroy_memory_buffers(struct main_data* data, struct communication_buffers
 void create_semaphores(struct main_data* data, struct semaphores* sems) {
 	sems->main_rest->full = semaphore_create(STR_SEM_MAIN_REST_FULL, 0);
 	sems->main_rest->empty = semaphore_create(STR_SEM_MAIN_REST_EMPTY, data->buffers_size);
-	sems->main_rest->mutex = semaphore_create(STR_SEM_MAIN_REST_MUTEX , 0);
+	sems->main_rest->mutex = semaphore_create(STR_SEM_MAIN_REST_MUTEX , 1);
 	sems->rest_driv->full = semaphore_create(STR_SEM_REST_DRIV_FULL, 0);
 	sems->rest_driv->empty = semaphore_create(STR_SEM_REST_DRIV_EMPTY, data->buffers_size);
-	sems->rest_driv->mutex = semaphore_create(STR_SEM_REST_DRIV_MUTEX, 0);
+	sems->rest_driv->mutex = semaphore_create(STR_SEM_REST_DRIV_MUTEX, 1);
 	sems->driv_cli->full = semaphore_create(STR_SEM_DRIV_CLI_FULL, 0);
 	sems->driv_cli->empty = semaphore_create(STR_SEM_DRIV_CLI_EMPTY, data->buffers_size);
-	sems->driv_cli->mutex = semaphore_create(STR_SEM_DRIV_CLI_MUTEX, 0);
-	sems->results_mutex = semaphore_create (STR_SEM_RESULTS_MUTEX, 0);
+	sems->driv_cli->mutex = semaphore_create(STR_SEM_DRIV_CLI_MUTEX, 1);
+	sems->results_mutex = semaphore_create (STR_SEM_RESULTS_MUTEX, 1);
 }
 
 void wakeup_processes(struct main_data* data, struct semaphores* sems) {
