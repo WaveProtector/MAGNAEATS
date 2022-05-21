@@ -281,14 +281,14 @@ void destroy_memory_buffers(struct main_data* data, struct communication_buffers
 void create_semaphores(struct main_data* data, struct semaphores* sems) {
 	sems->main_rest->full = semaphore_create(STR_SEM_MAIN_REST_FULL, 0);
 	sems->main_rest->empty = semaphore_create(STR_SEM_MAIN_REST_EMPTY, data->buffers_size);
-	sems->main_rest->mutex = semaphore_create(STR_SEM_MAIN_REST_MUTEX , 0);
+	sems->main_rest->mutex = semaphore_create(STR_SEM_MAIN_REST_MUTEX , 1);
 	sems->rest_driv->full = semaphore_create(STR_SEM_REST_DRIV_FULL, 0);
 	sems->rest_driv->empty = semaphore_create(STR_SEM_REST_DRIV_EMPTY, data->buffers_size);
-	sems->rest_driv->mutex = semaphore_create(STR_SEM_REST_DRIV_MUTEX, 0);
+	sems->rest_driv->mutex = semaphore_create(STR_SEM_REST_DRIV_MUTEX, 1);
 	sems->driv_cli->full = semaphore_create(STR_SEM_DRIV_CLI_FULL, 0);
 	sems->driv_cli->empty = semaphore_create(STR_SEM_DRIV_CLI_EMPTY, data->buffers_size);
-	sems->driv_cli->mutex = semaphore_create(STR_SEM_DRIV_CLI_MUTEX, 0);
-	sems->results_mutex = semaphore_create (STR_SEM_RESULTS_MUTEX, 0);
+	sems->driv_cli->mutex = semaphore_create(STR_SEM_DRIV_CLI_MUTEX, 1);
+	sems->results_mutex = semaphore_create (STR_SEM_RESULTS_MUTEX, 1);
 }
 
 void wakeup_processes(struct main_data* data, struct semaphores* sems) {
@@ -297,7 +297,6 @@ void wakeup_processes(struct main_data* data, struct semaphores* sems) {
 		produce_end(sems->main_rest);
 		produce_end(sems->rest_driv);
 		produce_end(sems->driv_cli);
-		
 	}
 	
 }
