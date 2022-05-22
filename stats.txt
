@@ -4,25 +4,3 @@ Process Statistics:
     Client 0 received 0 requests!
 
 Request Statistics:
-    Request 1
-    Status C
-    Restaurant id: 1
-    Driver id: 1
-    Client id: 1
-    Created: 2022-05-22 19:49:53.322
-    Restaurant time: 2022-05-22 19:49:53.322
-    Driver time: 2022-05-22 19:49:53.322
-    Client time (end): 2022-05-22 19:49:53.322
-    Total time: 00. 65
- 
-    Request 2
-    Status C
-    Restaurant id: 1
-    Driver id: 1
-    Client id: 1
-    Created: 2022-05-22 19:49:57.503
-    Restaurant time: 2022-05-22 19:49:57.503
-    Driver time: 2022-05-22 19:49:57.503
-    Client time (end): 2022-05-22 19:49:57.503
-    Total time: 00.  3
- 

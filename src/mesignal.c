@@ -64,7 +64,6 @@ void ctrlC(int sig)
    printf("Stop Execution \n");
    stop_execution(d, s); 
 
-   // garantir que todos os processos capturem o sinal
    pid_t my_ppid = getppid();
    kill(my_ppid, SIGINT);
 }

@@ -152,8 +152,8 @@ void create_request(int* op_counter, struct communication_buffers* buffers, stru
     if (*op_counter < data->max_ops) {
 
 	    char dish[100] = "", c;
-		int req_cli;
-		int req_rest;
+		int req_cli = 0;
+		int req_rest = 0;
 		int len = 0;
 
 	    printf("Enter your 'client_number restaurant_number dish': \n");
