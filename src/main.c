@@ -49,6 +49,8 @@ int main(int argc, char *argv[]) {
 	create_shared_memory_buffers(data, buffers);
 	create_semaphores(data, sems);
 	launch_processes(buffers, data, sems);
+	get_params(data, sems);
+    signal_ctrlC(data, sems);
 	user_interaction(buffers, data, sems);
 	destroy_memory_buffers(data, buffers);
 //release memory before terminating
@@ -219,6 +221,7 @@ void read_status(struct main_data* data, struct semaphores* sems) {
 				   new.receiving_driver,
 				   new.receiving_client);
 			check ++;
+			free(new.requested_dish);
 		}
 	}			
 	if (check == 0) {

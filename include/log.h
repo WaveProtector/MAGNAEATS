@@ -4,7 +4,8 @@
 //Ricardo Mateus, fc56366
 
 #include <metime.h>
-#include <configuration.h>
 #include <sys/time.h>
+#include <mesignal.h>
 
+//Função que regista uma operação no fihceiro log.txt
 void regista_log(char* nome, char* instruction, int arg, struct timespec time);

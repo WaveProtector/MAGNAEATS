@@ -61,7 +61,7 @@ void create_alarm(struct main_data *data, struct config config)
 void ctrlC(int sig)
 {
    printf("Stop Execution \n");
-   stop_execution(d, s);
+   stop_execution(d, s); 
 
    // garantir que todos os processos capturem o sinal
    pid_t my_ppid = getppid();
@@ -70,14 +70,12 @@ void ctrlC(int sig)
 
 void signal_ctrlC(struct main_data *data, struct semaphores *sems)
 {
-
    struct sigaction sa;
    sa.sa_handler = &ctrlC;
    sa.sa_flags = 0;
    sigemptyset(&sa.sa_mask);
 
-   if (sigaction(SIGINT, &sa, NULL) == -1)
-   {
+   if (sigaction(SIGINT, &sa, NULL) == -1) {
       perror("main:");
       exit(-1);
    }
