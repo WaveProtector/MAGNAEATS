@@ -19,7 +19,7 @@ int execute_driver(int driver_id, struct communication_buffers* buffers, struct 
             i = 0;
                 
         driver_receive_operation(op, buffers, data, sems); 
-        register_driver_time(*op);
+        register_driver_time(op);
 
         if (op->id > 0 && *data->terminate == 0) {
             driver_process_operation(op, driver_id, data, pro, sems);

@@ -5,7 +5,7 @@
 
 #include <mesignal.h>
 
-struct operation *op;
+struct operation* op;
 
 struct main_data *d;
 
@@ -19,11 +19,11 @@ void get_params(struct main_data *data, struct semaphores *sems)
 
 void sig_handler()
 {
-   while (op != NULL)
+   while (op->id != 0 && *d->terminate != -1)
    {
       if (op->status == 'C')
       {
-         printf("request:%d status:C start:%ld restaurant:%d rest_time:%ld driver:%d driver_time:%ld client:%d client_end_time:%ld",
+         printf("\nrequest:%d status:C start:%ld restaurant:%d rest_time:%ld driver:%d driver_time:%ld client:%d client_end_time:%ld",
                 op->id,
                 op->start_time.tv_sec,
                 op->receiving_rest,
@@ -35,26 +35,27 @@ void sig_handler()
       }
       else
       {
-         printf("request:%d status:%c", op->id, op->status);
+         printf("\nrequest:%d status:%c", op->id, op->status);
       }
       op++;
    }
 }
 
 
-void create_alarm(struct main_data *data, struct config config)
+void create_alarm(struct main_data *data, struct config *config)
 {
    op = data->results;
    signal(SIGALRM, sig_handler);
-   int alarm_time = config.alarm_time;
-   
+   int alarm_time = config->alarm_time;
+   int pid = fork();
+   if(pid == 0){
       while (*data->terminate != 1)
       {
          op = data->results;
          alarm(alarm_time);
          pause();
       }
-      
+   }
       
 }
 

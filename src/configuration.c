@@ -6,7 +6,7 @@
 #include <configuration.h>
 #define MAXLINHA 64
 
-void get_config_params(struct main_data *data, struct config config, char *argv[])
+void get_config_params(struct main_data *data, struct config *config, char *argv[])
 {
     FILE *conf;
     if (NULL == (conf = fopen(argv[1], "r")))
@@ -29,8 +29,8 @@ void get_config_params(struct main_data *data, struct config config, char *argv[
         data->n_restaurants = atoi(line[2]);
         data->n_drivers = atoi(line[3]);
         data->n_clients = atoi(line[4]);
-        config.log_name = line[5];
-        config.stat_name = line[6];
-        config.alarm_time = atoi(line[7]);
+        config->log_name = line[5];
+        config->stat_name = line[6];
+        config->alarm_time = atoi(line[7]);
     }
 }

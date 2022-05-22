@@ -19,7 +19,7 @@ int execute_client(int client_id, struct communication_buffers* buffers, struct 
                 i = 0;
 
             client_get_operation(op, client_id, buffers, data, sems);
-            register_client_end_time(*op);
+            register_client_end_time(op);
     
 
             if (op->id > 0 && *data->terminate == 0) {

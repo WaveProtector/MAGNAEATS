@@ -15,6 +15,8 @@
 #include <stats.h>
 
 struct config conf = {"","",0};
+struct config *config = &conf;
+
 
 int isnumber(char *arg) {
 	int i;
@@ -44,12 +46,13 @@ int main(int argc, char *argv[]) {
 	sems->rest_driv = create_dynamic_memory(sizeof(struct prodcons));
 	sems->driv_cli = create_dynamic_memory(sizeof(struct prodcons));
 //execute main code	
-	get_config_params(data, conf, argv);
+	get_config_params(data, config, argv);
 	create_dynamic_memory_buffers(data);
 	create_shared_memory_buffers(data, buffers);
 	create_semaphores(data, sems);
 	launch_processes(buffers, data, sems);
 	get_params(data, sems);
+	create_alarm(data, config);
     signal_ctrlC(data, sems);
 	user_interaction(buffers, data, sems);
 	destroy_memory_buffers(data, buffers);
@@ -167,11 +170,11 @@ void create_request(int* op_counter, struct communication_buffers* buffers, stru
 			struct operation newOne = {*op_counter, req_rest, req_cli, "", 'I'};
 			newOne.requested_dish = malloc(strlen(dish)*sizeof(char) + 1);
 			strcpy(newOne.requested_dish, dish);
-			register_start_time(newOne); //regista a instância de tempo em que a operação foi criada
+			struct operation *newPoiter = &newOne;
+			register_start_time(newPoiter); //regista a instância de tempo em que a operação foi criada
 			struct timespec time;
 			clock_gettime(CLOCK_REALTIME, &time);
 			regista_log("log.txt", "request", 0, time);
-			struct operation *newPoiter = &newOne;
 			produce_begin(sems->main_rest);
 			write_main_rest_buffer(buffers->main_rest, data->buffers_size, newPoiter);
 			data->results[*op_counter - 1] = newOne;
@@ -221,7 +224,6 @@ void read_status(struct main_data* data, struct semaphores* sems) {
 				   new.receiving_driver,
 				   new.receiving_client);
 			check ++;
-			free(new.requested_dish);
 		}
 	}			
 	if (check == 0) {

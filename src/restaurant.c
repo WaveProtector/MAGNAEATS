@@ -19,7 +19,7 @@ int execute_restaurant(int rest_id, struct communication_buffers* buffers, struc
             i = 0;
 
         restaurant_receive_operation(op, rest_id, buffers, data, sems);
-        register_rest_time(*op);
+        register_rest_time(op);
                 
         if ((op->id) > 0 && *data->terminate == 0) {
             restaurant_process_operation(op, rest_id, data, pro, sems);
