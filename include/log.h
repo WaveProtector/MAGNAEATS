@@ -4,8 +4,7 @@
 //Ricardo Mateus, fc56366
 
 #include <metime.h>
+#include <configuration.h>
 #include <sys/time.h>
 
-char* le_nome_ficheiro ();
-
-void regista_log (char* file_name, char* instruction, struct timespec time);
+void regista_log(char* nome, char* instruction, int arg, struct timespec time);

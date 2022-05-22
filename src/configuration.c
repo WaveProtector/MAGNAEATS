@@ -9,7 +9,7 @@
 void get_config_params(struct main_data* data, struct config *config)
 {
     FILE *conf = fopen("config.txt", "r");
-    char line[8][MAXLINHA];
+    char line[10][MAXLINHA];
     int i;
     for (i = 0; i < 8; i++)
     {
@@ -23,4 +23,5 @@ void get_config_params(struct main_data* data, struct config *config)
     config->log_name = line[5];
     config->stat_name = line[6];
     config->alarm_time = atoi(line[7]);
+    fclose(conf);
 }

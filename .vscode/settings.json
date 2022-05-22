@@ -4,7 +4,8 @@
         "stats.h": "c",
         "string.h": "c",
         "stdio.h": "c",
-        "restaurant.h": "c"
+        "restaurant.h": "c",
+        "metime.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

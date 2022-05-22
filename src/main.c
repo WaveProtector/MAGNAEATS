@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <main.h>
 #include <process.h>
-#include <configuration.h>
 #include <string.h>
 #include <ctype.h>
 #include <metime.h>
@@ -73,7 +72,6 @@ void create_dynamic_memory_buffers(struct main_data* data) {
 }
 
 void create_shared_memory_buffers(struct main_data* data, struct communication_buffers* buffers) {
-
     buffers->main_rest->buffer = create_shared_memory(STR_SHM_MAIN_REST_BUFFER, data->buffers_size);
 	buffers->main_rest->ptrs = create_shared_memory(STR_SHM_MAIN_REST_PTR, data->buffers_size);
 	buffers->rest_driv->buffer = create_shared_memory(STR_SHM_REST_DRIVER_BUFFER, data->buffers_size);
@@ -126,6 +124,9 @@ void user_interaction(struct communication_buffers* buffers, struct main_data* d
 	    }
 
 	    else if (strcmp(s, "help") == 0) {
+			struct timespec time;
+			clock_gettime(CLOCK_REALTIME, &time);
+			regista_log("log.txt", "help", 0, time);
 		    printf("You have 4 options to choose: \n"
 		           "-request -> Type 'request' and press enter to make an order.\n"
 			       "-status id -> Type 'status' and press enter to check the status of an order.\n"
@@ -150,17 +151,16 @@ void create_request(int* op_counter, struct communication_buffers* buffers, stru
 		int len = 0;
 
 	    printf("Enter your 'client_number restaurant_number dish': \n");
-	    scanf("%d %d", &req_cli, &req_rest);	
-		while(scanf("%c", &c)==1) {
-        	if(c == '\n')
-          	  break;
-        	dish[len++]=c;
-		}
+	    scanf("%d %d %c", &req_cli, &req_rest, dish);	
+		
 
 		if (req_cli != 0 && req_rest != 0 && req_cli <= data->n_clients && req_rest <= data->n_restaurants) { 
 			(*op_counter)++;
 			struct operation newOne = {*op_counter, req_rest, req_cli, dish, 'I', 0, 0, 0};
 			register_start_time(newOne); //regista a instância de tempo em que a operação foi criada
+			struct timespec time;
+			clock_gettime(CLOCK_REALTIME, &time);
+			regista_log("log.txt", "request", 0, time);
 			struct operation *newPoiter = &newOne;
 			produce_begin(sems->main_rest);
 			write_main_rest_buffer(buffers->main_rest, data->buffers_size, newPoiter);
@@ -191,6 +191,9 @@ void read_status(struct main_data* data, struct semaphores* sems) {
 	for (int i = 0; i < data->buffers_size && c > 0; i++) {
 		struct operation new = *((data->results) + i);
 		if (c == (*((data->results) + i)).id) {
+			struct timespec time;
+			clock_gettime(CLOCK_REALTIME, &time);
+			regista_log("log.txt", "status", c, time);
 			printf("Order ID: %d \n"
 				   "Order status: %c \n"
 			       "Requesting client ID: %d \n"
@@ -216,6 +219,9 @@ void read_status(struct main_data* data, struct semaphores* sems) {
 }
 
 void stop_execution(struct main_data* data, struct semaphores* sems) {
+	struct timespec time;
+	clock_gettime(CLOCK_REALTIME, &time);
+	regista_log("log.txt", "stop", 0, time);
 	*data->terminate = 1;
 	wakeup_processes(data, sems);
 	wait_processes(data);
