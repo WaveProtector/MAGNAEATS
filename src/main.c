@@ -13,6 +13,9 @@
 #include <metime.h>
 #include <unistd.h>
 #include <log.h>
+#include <stats.h>
+
+struct config conf = {"","",0};
 
 int isnumber(char *arg) {
 	int i;
@@ -41,10 +44,8 @@ int main(int argc, char *argv[]) {
 	sems->main_rest = create_dynamic_memory(sizeof(struct prodcons));
 	sems->rest_driv = create_dynamic_memory(sizeof(struct prodcons));
 	sems->driv_cli = create_dynamic_memory(sizeof(struct prodcons));
-//execute main code
-    struct config conf = {"","",0};
-	struct config *cf = &conf;	
-	get_config_params(data, cf);
+//execute main code	
+	get_config_params(data, conf, argv);
 	create_dynamic_memory_buffers(data);
 	create_shared_memory_buffers(data, buffers);
 	create_semaphores(data, sems);
@@ -218,9 +219,9 @@ void read_status(struct main_data* data, struct semaphores* sems) {
 void stop_execution(struct main_data* data, struct semaphores* sems) {
 	*data->terminate = 1;
 	wakeup_processes(data, sems);
+	destroy_semaphores(sems);
 	wait_processes(data);
 	write_statistics(data);
-	destroy_semaphores(sems);
 }
 
 void wait_processes(struct main_data* data) {
@@ -240,25 +241,7 @@ void wait_processes(struct main_data* data) {
 }
 
 void write_statistics(struct main_data* data) {
-
-	int i;
-
-	for(i = 0; i < data->n_restaurants; i++) {
-		printf("Restaurante %d: %d operacoes\n", (i+1), *(data->restaurant_stats + i));
-	}
-
-	printf("\n");
-
-	for(i = 0; i < data->n_drivers; i++) {
-		printf("Motorista %d: %d operacoes\n", (i+1), *(data->driver_stats + i));
-	}
-
-	printf("\n");
-
-	for(i = 0; i < data->n_clients; i++) {
-		printf("Cliente %d: %d operacoes\n", (i+1), *(data->client_stats + i));
-	}
-
+	execute_stats(data, conf.stat_name);
 }
 
 void destroy_memory_buffers(struct main_data* data, struct communication_buffers* buffers) {

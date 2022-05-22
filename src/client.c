@@ -8,7 +8,7 @@
 #include <metime.h>
 
 int execute_client(int client_id, struct communication_buffers* buffers, struct main_data* data, struct semaphores* sems) {
-    int processed_ops; 
+    int processed_ops = 0; 
     int i = 0;
     int *pro = &processed_ops;
     struct operation aux_op = {0, 0 ,0, "", 'I', 0, 0, 0}; 

@@ -25,5 +25,5 @@ struct config {
 * Lê também o o nome do ficheiro de log, o nome do ficheiro de estatística e 
 * o tempo de alarme. Guarda esta informação na estrutura de dados config.
 */
-void get_config_params(struct main_data *data, struct config *config);
+void get_config_params(struct main_data *data, struct config config, char *argv[]);
 
