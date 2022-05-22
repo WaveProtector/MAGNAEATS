@@ -146,7 +146,7 @@ void create_request(int* op_counter, struct communication_buffers* buffers, stru
 
     if (*op_counter < data->max_ops) {
 
-	    char dish[100], c;
+	    char dish[100] = "", c;
 		int req_cli;
 		int req_rest;
 		int len = 0;
