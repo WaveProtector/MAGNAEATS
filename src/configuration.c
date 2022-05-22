@@ -6,7 +6,7 @@
 #include <configuration.h>
 #define MAXLINHA 64
 
-void get_config_params(struct main_data *data, struct config config, int argc, char *argv[])
+void get_config_params(struct main_data *data, struct config config, char *argv[])
 {
     FILE *conf;
     if (NULL == (conf = fopen(argv[1], "r")))
