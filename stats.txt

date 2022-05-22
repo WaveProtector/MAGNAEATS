@@ -15,3 +15,14 @@ Request Statistics:
     Client time (end): 1970-01-01 01:00:00.  0
     Total time: 00.  0
  
+    Request 2
+    Status C
+    Restaurant id: 1
+    Driver id: 1
+    Client id: 1
+    Created: 1970-01-01 01:00:00.  0
+    Restaurant time: 1970-01-01 01:00:00.  0
+    Driver time: 1970-01-01 01:00:00.  0
+    Client time (end): 1970-01-01 01:00:00.  0
+    Total time: 00.  0
+ 

@@ -162,7 +162,7 @@ void create_request(int* op_counter, struct communication_buffers* buffers, stru
 
 		if (req_cli != 0 && req_rest != 0 && req_cli <= data->n_clients && req_rest <= data->n_restaurants) { 
 			(*op_counter)++;
-			struct operation newOne = {*op_counter, req_rest, req_cli,"", 'I', 0, 0, 0};
+			struct operation newOne = {*op_counter, req_rest, req_cli, "", 'I'};
 			newOne.requested_dish = malloc(strlen(dish)*sizeof(char) + 1);
 			strcpy(newOne.requested_dish, dish);
 			register_start_time(newOne); //regista a instância de tempo em que a operação foi criada

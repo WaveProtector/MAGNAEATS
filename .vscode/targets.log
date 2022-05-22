@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun May 22 15:56:24 2022
+# Make data base, printed on Sun May 22 17:04:38 2022
 
 # Variables
 
@@ -187,7 +187,7 @@ SNAP_USER_DATA = /home/aluno-di/snap/code/97
 # environment
 SHLVL = 0
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-f20cff66-8b8f-415d-93ae-786a348d6275.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-8cda00dd-f8b2-418f-8eaa-444696ff6efa.sock
 # environment
 XDG_SESSION_ID = c2
 # environment
@@ -269,7 +269,7 @@ XDG_RUNTIME_DIR = /run/user/1000
 # environment
 LANG = C
 # environment
-VSCODE_PID = 1903
+VSCODE_PID = 6923
 # variable set hash-table stats:
 # Load=129/1024=13%, Rehash=0, Collisions=18/155=12%
 
@@ -281,8 +281,8 @@ VSCODE_PID = 1903
 
 # . (device 2053, inode 920945): 13 files, no impossibilities.
 
- 
 # 13 files, no impossibilities in 1 directories.
+ 
 
 # Implicit Rules
 
@@ -559,6 +559,6 @@ log.o: src/log.c include/log.h
 # strcache performance: lookups = 84 / hit rate = 34%
 # hash-table stats:
 # Load=55/8192=1%, Rehash=0, Collisions=1/84=1%
-# Finished Make data base on Sun May 22 15:56:24 2022
+# Finished Make data base on Sun May 22 17:04:38 2022
 
  

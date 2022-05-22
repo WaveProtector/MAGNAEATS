@@ -45,7 +45,7 @@ void driver_process_operation(struct operation* op, int driver_id, struct main_d
     op->status = 'D';
     int i;
     (*counter)++;
-    *(data->driver_stats + (op->id - 1)) += 1;
+    *(data->driver_stats + (driver_id - 1)) += 1;
     for(i = 0; i < data->buffers_size; i++) {
         if((data->results[i]).id == op->id) {
             semaphore_mutex_lock(sems->results_mutex);

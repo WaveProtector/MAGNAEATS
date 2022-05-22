@@ -49,7 +49,7 @@ void restaurant_process_operation(struct operation* op, int rest_id, struct main
     int i;
     counter++;
     
-    *(data->restaurant_stats + (op->id - 1)) += 1;
+    data->restaurant_stats[rest_id - 1] += 1;
     for(i = 0; i < data->buffers_size; i++) {
         if((data->results[i]).id == op->id) {
             semaphore_mutex_lock(sems->results_mutex);
