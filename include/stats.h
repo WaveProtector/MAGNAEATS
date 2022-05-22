@@ -37,4 +37,4 @@ void clients_prep_req(int* client_stats, int n_restaurants, FILE *stats);
 /* Função que recebe o histórico de operações executadas e regista
 * uma string com as informações de cada operação no ficheiro stats.
 */
-void req_stats(struct operation* results, FILE *stats);
+void req_stats(struct operation* results, FILE *stats, int max_ops);

@@ -40,7 +40,7 @@ void execute_stats(struct main_data *data)
     drivers_prep_req(data->driver_stats, data->n_drivers, stats);
     clients_prep_req(data->client_stats, data->n_clients, stats);
     fputs("\nRequest Statistics:\n", stats);
-    req_stats(data->results, stats);
+    req_stats(data->results, stats, data->max_ops);
     fclose(stats);
 }
 
@@ -68,26 +68,28 @@ void clients_prep_req(int *client_stats, int n_clients, FILE *stats)
     }
 }
 
-void req_stats(struct operation *results, FILE *stats)
+void req_stats(struct operation *results, FILE *stats, int max_ops)
 {
     struct timespec total_time;
 
-    for (int i = 0; i < (sizeof(&results) / sizeof(results[0])); i++)
+    for (int i = 0; i < max_ops; i++)
     {
-             total_time.tv_sec = results[i].client_end_time.tv_sec - results[i].start_time.tv_sec;
-            total_time.tv_nsec = results[i].client_end_time.tv_nsec - results[i].start_time.tv_nsec;       
-            fprintf(stats, "    Request %d\n    Status %d\n     Restaurant id: %d\n     Driver id: %d\n Client id: %d\n",
+        if (results[i].id != 0)
+        {
+            total_time.tv_sec = results[i].client_end_time.tv_sec - results[i].start_time.tv_sec;
+            total_time.tv_nsec = results[i].client_end_time.tv_nsec - results[i].start_time.tv_nsec;
+            fprintf(stats, "    Request %d\n    Status %c\n    Restaurant id: %d\n    Driver id: %d\n    Client id: %d\n",
                     results[i].id,
                     results[i].status,
                     results[i].receiving_rest,
                     results[i].receiving_driver,
-                    results[i].receiving_client); 
-            fprintf(stats, "    Created: %s\n   Restaurant time: %s\n    Driver time: %s\n   Client time (end): %s\n     Total time: %s\n \n",
-                   timespec_to_date(results[i].start_time),
-                   timespec_to_date(results[i].rest_time),
-                   timespec_to_date(results[i].driver_time),
-                   timespec_to_date(results[i].client_end_time),
-                   timespec_to_seconds(total_time));
-        
+                    results[i].receiving_client);
+            fprintf(stats, "    Created: %s\n    Restaurant time: %s\n    Driver time: %s\n    Client time (end): %s\n    Total time: %s\n \n",
+                    timespec_to_date(results[i].start_time),
+                    timespec_to_date(results[i].rest_time),
+                    timespec_to_date(results[i].driver_time),
+                    timespec_to_date(results[i].client_end_time),
+                    timespec_to_seconds(total_time));
+        }
     }
 }

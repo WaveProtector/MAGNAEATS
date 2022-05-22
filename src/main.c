@@ -152,12 +152,19 @@ void create_request(int* op_counter, struct communication_buffers* buffers, stru
 		int len = 0;
 
 	    printf("Enter your 'client_number restaurant_number dish': \n");
-	    scanf("%d %d %c", &req_cli, &req_rest, dish);	
+		scanf("%d %d ", &req_cli, &req_rest);	
+		while(scanf("%c", &c)==1) {
+        	if(c == '\n')
+          	  break;
+        	dish[len++]=c;
+		}	
 		
 
 		if (req_cli != 0 && req_rest != 0 && req_cli <= data->n_clients && req_rest <= data->n_restaurants) { 
 			(*op_counter)++;
-			struct operation newOne = {*op_counter, req_rest, req_cli, dish, 'I', 0, 0, 0};
+			struct operation newOne = {*op_counter, req_rest, req_cli,"", 'I', 0, 0, 0};
+			newOne.requested_dish = malloc(strlen(dish)*sizeof(char) + 1);
+			strcpy(newOne.requested_dish, dish);
 			register_start_time(newOne); //regista a instância de tempo em que a operação foi criada
 			struct timespec time;
 			clock_gettime(CLOCK_REALTIME, &time);
