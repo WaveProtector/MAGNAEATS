@@ -241,7 +241,7 @@ void wait_processes(struct main_data* data) {
 }
 
 void write_statistics(struct main_data* data) {
-	execute_stats(data, conf.stat_name);
+	execute_stats(data);
 }
 
 void destroy_memory_buffers(struct main_data* data, struct communication_buffers* buffers) {
