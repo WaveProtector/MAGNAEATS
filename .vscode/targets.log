@@ -8,7 +8,11 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
+<<<<<<< HEAD
 # Make data base, printed on Sun May 22 02:47:24 2022
+=======
+# Make data base, printed on Sat May 21 18:21:28 2022
+>>>>>>> 9c9949ab0d6baa7f706a3f1b7ba9eacb7ea26234
 
 # Variables
 
@@ -79,7 +83,13 @@ PATH = /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
+<<<<<<< HEAD
 SESSION_MANAGER = local/jaojao:@/tmp/.ICE-unix/1668,unix/jaojao:/tmp/.ICE-unix/1668
+=======
+SESSION_MANAGER = local/alunodi-VirtualBox:@/tmp/.ICE-unix/1266,unix/alunodi-VirtualBox:/tmp/.ICE-unix/1266
+# environment
+BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
+>>>>>>> 9c9949ab0d6baa7f706a3f1b7ba9eacb7ea26234
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # makefile (from 'Makefile', line 1)
@@ -115,7 +125,11 @@ PWD = /home/joaocavalcanti/Desktop/MAGNAEATS
 # environment
 SSH_AGENT_PID = 1631
 # environment
+<<<<<<< HEAD
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
+=======
+SSH_AGENT_PID = 1442
+>>>>>>> 9c9949ab0d6baa7f706a3f1b7ba9eacb7ea26234
 # environment
 GTK_MODULES = gail:atk-bridge
 # environment
@@ -147,7 +161,11 @@ QT_IM_MODULE = ibus
 # environment
 SHLVL = 0
 # environment
+<<<<<<< HEAD
 GNOME_SHELL_SESSION_MODE = ubuntu
+=======
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-bab388c2-f9e4-48e4-8710-80751b0c63d1.sock
+>>>>>>> 9c9949ab0d6baa7f706a3f1b7ba9eacb7ea26234
 # environment
 VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-53130a55-0e11-4b20-baff-152ea5920feb.sock
 # default
@@ -209,7 +227,11 @@ GJS_DEBUG_OUTPUT = stderr
 # environment
 LANG = C
 # environment
+<<<<<<< HEAD
 VSCODE_PID = 1997
+=======
+VSCODE_PID = 2152
+>>>>>>> 9c9949ab0d6baa7f706a3f1b7ba9eacb7ea26234
 # variable set hash-table stats:
 # Load=99/1024=10%, Rehash=0, Collisions=13/125=10%
 
@@ -224,6 +246,7 @@ VSCODE_PID = 1997
 # 12 files, no impossibilities in 1 directories.
 
 # Implicit Rules
+ 
 
 # No implicit rules.
 
@@ -493,12 +516,22 @@ log.o: src/log.c include/log.h
 
 # No general ('VPATH' variable) search path.
 
+<<<<<<< HEAD
 # strcache buffers: 1 (0) / strings = 54 / storage = 658 B / avg = 12 B
 # current buf: size = 8162 B / used = 658 B / count = 54 / avg = 12 B
+=======
+# strcache buffers: 1 (0) / strings = 53 / storage = 653 B / avg = 12 B
+# current buf: size = 8162 B / used = 653 B / count = 53 / avg = 12 B
+>>>>>>> 9c9949ab0d6baa7f706a3f1b7ba9eacb7ea26234
 
 # strcache performance: lookups = 83 / hit rate = 34%
 # hash-table stats:
+<<<<<<< HEAD
 # Load=54/8192=1%, Rehash=0, Collisions=1/83=1%
 # Finished Make data base on Sun May 22 02:47:24 2022
+=======
+# Load=53/8192=1%, Rehash=0, Collisions=1/82=1%
+# Finished Make data base on Sat May 21 18:21:28 2022
+>>>>>>> 9c9949ab0d6baa7f706a3f1b7ba9eacb7ea26234
 
  

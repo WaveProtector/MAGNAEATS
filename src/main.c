@@ -305,7 +305,6 @@ void wakeup_processes(struct main_data* data, struct semaphores* sems) {
 		produce_end(sems->main_rest);
 		produce_end(sems->rest_driv);
 		produce_end(sems->driv_cli);
-		
 	}
 	
 }
