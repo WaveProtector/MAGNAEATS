@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
 	sems->rest_driv = create_dynamic_memory(sizeof(struct prodcons));
 	sems->driv_cli = create_dynamic_memory(sizeof(struct prodcons));
 //execute main code	
-	get_config_params(data, conf, argv);
+	get_config_params(data, conf, argc, argv);
 	create_dynamic_memory_buffers(data);
 	create_shared_memory_buffers(data, buffers);
 	create_semaphores(data, sems);
